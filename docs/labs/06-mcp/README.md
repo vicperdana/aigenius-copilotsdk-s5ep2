@@ -52,7 +52,7 @@ MCP tools become available inside the session.
 ## Step 3 — Configure and run the sample
 
 Open
-[`McpSample.cs`](../../../src/AgentOrchestrator/samples/SdkLabs/McpSample.cs)
+[`McpSample.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/samples/SdkLabs/McpSample.cs)
 and find the `SessionConfig`:
 
 ```csharp
@@ -119,7 +119,7 @@ when no MCP tool was available.
 ## Step 5 — Compare with the editor MCP configuration
 
 This repository already has the same server configured for VS Code in
-[`.vscode/mcp.json`](../../../.vscode/mcp.json):
+[`.vscode/mcp.json`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.vscode/mcp.json):
 
 ```json
 {

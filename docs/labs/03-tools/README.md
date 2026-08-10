@@ -24,7 +24,7 @@ final answer.
 ## Step 2 — Inspect the tool shape
 
 Open
-[`ToolsSample.cs`](../../../src/AgentOrchestrator/samples/SdkLabs/ToolsSample.cs)
+[`ToolsSample.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/samples/SdkLabs/ToolsSample.cs)
 and find `GetCustomerTotal`.
 
 A Copilot SDK tool starts as an ordinary C# method:
@@ -149,7 +149,7 @@ allowed.
 experimental. Using `GitHub.Copilot.Rpc.PermissionDecision` raises build error
 `GHCP001` unless it is suppressed. The samples project does that deliberately
 in
-[`SdkLabs.csproj`](../../../src/AgentOrchestrator/samples/SdkLabs/SdkLabs.csproj):
+[`SdkLabs.csproj`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/samples/SdkLabs/SdkLabs.csproj):
 
 ```xml
 <NoWarn>$(NoWarn);GHCP001</NoWarn>
@@ -163,7 +163,7 @@ engages where the host defers to it. Verify that it fires in **your**
 environment before relying on it as a control.
 
 See
-[`PermissionsSample.cs`](../../../src/AgentOrchestrator/samples/SdkLabs/PermissionsSample.cs)
+[`PermissionsSample.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/samples/SdkLabs/PermissionsSample.cs)
 for reference code. For a shell-hook governance alternative, see
 [extra-governance-hooks](../extra-governance-hooks/).
 

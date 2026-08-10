@@ -123,7 +123,7 @@ This is also what `.github/workflows/ci.yml` uses for restore, build, and test.
 
 - [Architecture](./architecture.md)
 - [Hooks and governance](./hooks-and-governance.md)
-- [`Directory.Build.props`](../../Directory.Build.props)
-- [CI workflow](../../.github/workflows/ci.yml)
-- [CodeQL workflow](../../.github/workflows/codeql.yml)
-- [Review instructions](../../.github/copilot-review-instructions.md)
+- [`Directory.Build.props`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/Directory.Build.props)
+- [CI workflow](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/workflows/ci.yml)
+- [CodeQL workflow](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/workflows/codeql.yml)
+- [Review instructions](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/copilot-review-instructions.md)

@@ -8,7 +8,7 @@ sections.
 | Section | What it is | Start here |
 |:--------|:-----------|:-----------|
 | [**Labs**](labs/) | Hands-on Copilot SDK exercises, ~2 hours end to end | [Lab 01 — Setup](labs/01-setup/) |
-| [**Demos**](demos/) | Walkthroughs explaining the code in [`/src`](../src/AgentOrchestrator/) | [Copilot SDK integration](demos/01-copilot-sdk-integration.md) |
+| [**Demos**](demos/) | Walkthroughs explaining the code in [`/src`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/src/AgentOrchestrator) | [Copilot SDK integration](demos/01-copilot-sdk-integration.md) |
 | [**Breakouts**](breakouts/) | Diagrams, configuration reference, troubleshooting | [Architecture](breakouts/architecture.md) |
 
 ### Labs — the SDK path
@@ -24,7 +24,7 @@ sections.
 | 07 | [Wrap-up](labs/07-wrap-up/) — consolidate and clean up | ~10 min |
 
 Backed by a runnable samples project at
-[`src/AgentOrchestrator/samples/SdkLabs`](../src/AgentOrchestrator/samples/SdkLabs).
+[`src/AgentOrchestrator/samples/SdkLabs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/src/AgentOrchestrator/samples/SdkLabs).
 
 ### Labs — extras (not the SDK)
 
@@ -72,12 +72,12 @@ Optional. These cover Copilot **CLI** and general app development.
 - **No large binaries** — no PowerPoint decks, videos, or recordings. Link to
   them instead.
 - **Nothing confidential** — no customer names, competitive analysis, account
-  plans, or internal-only material. See [`AGENTS.md`](../AGENTS.md).
+  plans, or internal-only material. See [`AGENTS.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/AGENTS.md).
 - **Don't "fix" the intentional code smells** — four flawed patterns exist
   deliberately for review demonstrations.
 
 ## Licensing
 
 Documentation in this folder is licensed under
-[CC BY 4.0](../LICENSE-DOCS). Source code in `/src` is licensed separately
-under the [MIT License](../LICENSE).
+[CC BY 4.0](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/LICENSE-DOCS). Source code in `/src` is licensed separately
+under the [MIT License](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/LICENSE).

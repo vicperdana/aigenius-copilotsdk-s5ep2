@@ -246,4 +246,4 @@ passes.
 
 - Next: [Extra — Extend the API](../extra-extend-api/)
 - [Breakout: Hooks and governance](../../breakouts/hooks-and-governance.md)
-- [`AGENTS.md`](../../../AGENTS.md) — repository rules for AI agents
+- [`AGENTS.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/AGENTS.md) — repository rules for AI agents

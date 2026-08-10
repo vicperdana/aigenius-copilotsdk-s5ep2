@@ -64,10 +64,10 @@ head -40 .github/copilot-instructions.md
 head -30 .github/copilot-review-instructions.md
 ```
 
-- [`copilot-instructions.md`](../../../.github/copilot-instructions.md) —
+- [`copilot-instructions.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/copilot-instructions.md) —
   coding standards every agent follows (file-scoped namespaces, async
   conventions, `Result<T>` over exceptions, and so on)
-- [`copilot-review-instructions.md`](../../../.github/copilot-review-instructions.md) —
+- [`copilot-review-instructions.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/copilot-review-instructions.md) —
   review-specific context: the SDK namespace move, the SSE flush requirement,
   and an explicit list of the intentional smells so reviewers don't report them
   as new bugs

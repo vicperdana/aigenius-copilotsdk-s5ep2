@@ -8,7 +8,7 @@ picker aligned with the live model list.
 ## App shape and ports
 
 The front end is a Blazor WebAssembly app under
-[`AgentHQDemo.Web`](../../src/AgentOrchestrator/AgentHQDemo.Web).
+[`AgentHQDemo.Web`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/src/AgentOrchestrator/AgentHQDemo.Web).
 
 Throughout this repository the two services are started with an explicit
 `--urls`, which overrides the launch profile:
@@ -24,7 +24,7 @@ ports — 5240 for the Web project and 5167 for the API — so running without
 default API base address of `http://localhost:5050` will no longer match.
 Either pass `--urls` as documented, or set `ApiBaseUrl` to match.
 
-[`AgentHQDemo.Web/Program.cs`](../../src/AgentOrchestrator/AgentHQDemo.Web/Program.cs)
+[`AgentHQDemo.Web/Program.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Program.cs)
 configures the API base address:
 
 ```csharp
@@ -33,14 +33,14 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBase)
 ```
 
 The API enables CORS in
-[`AgentHQDemo.Api/Program.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Program.cs)
+[`AgentHQDemo.Api/Program.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Program.cs)
 with a default policy that allows any origin, method, and header. That lets the
 WebAssembly app served from its local development URL call the configured API
 base address during the demo.
 
 ## `Home.razor`
 
-[`Home.razor`](../../src/AgentOrchestrator/AgentHQDemo.Web/Pages/Home.razor) is
+[`Home.razor`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Pages/Home.razor) is
 the main chat page. It owns the page state:
 
 - `Messages`: the ordered chat transcript.
@@ -66,7 +66,7 @@ to scroll the message container to the bottom and highlight code blocks.
 
 ## Local storage persistence
 
-[`StorageService`](../../src/AgentOrchestrator/AgentHQDemo.Web/Services/StorageService.cs)
+[`StorageService`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Services/StorageService.cs)
 wraps `Blazored.LocalStorage`. It stores three local values:
 
 | Key | Used for |
@@ -80,7 +80,7 @@ list.
 
 ## Model picker
 
-[`Header.razor`](../../src/AgentOrchestrator/AgentHQDemo.Web/Components/Header.razor)
+[`Header.razor`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Components/Header.razor)
 renders the model picker. It receives the live `Models` dictionary and binds the
 selected option to `SelectedModel`:
 
@@ -94,7 +94,7 @@ and saves the new model through `StorageService.SetSelectedModelAsync`.
 
 ## Fetching live models
 
-[`ChatService.GetModelsAsync`](../../src/AgentOrchestrator/AgentHQDemo.Web/Services/ChatService.cs)
+[`ChatService.GetModelsAsync`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Services/ChatService.cs)
 loads model metadata from the API:
 
 ```csharp
@@ -126,17 +126,17 @@ API no longer offers.
 
 ## Supporting components
 
-[`ChatInput`](../../src/AgentOrchestrator/AgentHQDemo.Web/Components/ChatInput.razor)
+[`ChatInput`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Components/ChatInput.razor)
 provides the textarea and send button. It sends on button click or Enter without
 Shift, disables input while loading, trims blank messages, and focuses the input
 after first render.
 
-[`Message`](../../src/AgentOrchestrator/AgentHQDemo.Web/Components/Message.razor)
+[`Message`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Components/Message.razor)
 renders user and assistant messages. Empty assistant content displays a typing
 indicator; non-empty content is rendered from markdown using Markdig, with code
 blocks marked for JavaScript highlighting behaviour.
 
-[`SuggestionChips`](../../src/AgentOrchestrator/AgentHQDemo.Web/Components/SuggestionChips.razor)
+[`SuggestionChips`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Components/SuggestionChips.razor)
 shows predefined retail analytics prompts. Selecting a chip sends that prompt
 through the same `Home.razor.SendMessage` path as typed input.
 
@@ -146,10 +146,10 @@ through the same `Home.razor.SendMessage` path as typed input.
 - [Streaming responses over SSE](./02-sse-streaming.md)
 - [The retail domain](./03-retail-analytics.md)
 - Source:
-  [`Home.razor`](../../src/AgentOrchestrator/AgentHQDemo.Web/Pages/Home.razor),
-  [`Header.razor`](../../src/AgentOrchestrator/AgentHQDemo.Web/Components/Header.razor),
-  [`ChatService.cs`](../../src/AgentOrchestrator/AgentHQDemo.Web/Services/ChatService.cs),
-  [`StorageService.cs`](../../src/AgentOrchestrator/AgentHQDemo.Web/Services/StorageService.cs),
-  [`AgentHQDemo.Web/Program.cs`](../../src/AgentOrchestrator/AgentHQDemo.Web/Program.cs),
-  [`AgentHQDemo.Api/Program.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Program.cs),
-  [`Components`](../../src/AgentOrchestrator/AgentHQDemo.Web/Components)
+  [`Home.razor`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Pages/Home.razor),
+  [`Header.razor`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Components/Header.razor),
+  [`ChatService.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Services/ChatService.cs),
+  [`StorageService.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Services/StorageService.cs),
+  [`AgentHQDemo.Web/Program.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Program.cs),
+  [`AgentHQDemo.Api/Program.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Program.cs),
+  [`Components`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/src/AgentOrchestrator/AgentHQDemo.Web/Components)

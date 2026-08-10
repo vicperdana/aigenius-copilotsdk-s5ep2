@@ -21,7 +21,7 @@ history stays attached to the same id.
 ## Step 2 — Create a session with a known id
 
 Open
-[`SessionsSample.cs`](../../../src/AgentOrchestrator/samples/SdkLabs/SessionsSample.cs)
+[`SessionsSample.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/samples/SdkLabs/SessionsSample.cs)
 and find the session id:
 
 ```csharp

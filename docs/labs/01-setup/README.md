@@ -49,7 +49,7 @@ Build succeeded.
 ⚠️ **If you get `MSB3923: Failed to download file ... registry.npmjs.org`**,
 your network blocks the npm registry. The Copilot SDK downloads a matching CLI
 binary at build time. Install the CLI globally instead and rebuild —
-[`Directory.Build.props`](../../../Directory.Build.props) will detect and reuse it:
+[`Directory.Build.props`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/Directory.Build.props) will detect and reuse it:
 
 ```bash
 npm install -g @github/copilot

@@ -1,6 +1,6 @@
 # Demos
 
-Walkthroughs of the code in [`/src`](../../src/AgentOrchestrator/). Read these
+Walkthroughs of the code in [`/src`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/src/AgentOrchestrator). Read these
 to understand *how* the Agent HQ demo works — the [labs](../labs/) are the
 hands-on counterpart.
 
@@ -28,7 +28,7 @@ into the walkthroughs for the sections you'll be asked about.
 
 [Walkthrough 03](03-retail-analytics.md) documents four flawed patterns that
 exist **on purpose** for code-review demonstrations. They are not bugs to fix.
-See [`AGENTS.md`](../../AGENTS.md).
+See [`AGENTS.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/AGENTS.md).
 
 ## Related
 

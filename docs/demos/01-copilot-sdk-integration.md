@@ -8,7 +8,7 @@ stale model catalogues.
 ## Where the SDK is used
 
 The main integration point is
-[`CopilotChatService`](../../src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs).
+[`CopilotChatService`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs).
 It imports the SDK with:
 
 ```csharp
@@ -22,7 +22,7 @@ namespace was `GitHub.Copilot.SDK`; in the v1.x code used here, the namespace is
 
 ## One long-lived client
 
-[`Program.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Program.cs)
+[`Program.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Program.cs)
 registers `CopilotChatService` as a singleton:
 
 ```csharp
@@ -158,7 +158,7 @@ var models = await _client.ListModelsAsync(cancellationToken);
 Hardcoding model IDs is a trap. Model availability changes by account, rollout,
 and provider; a stale hardcoded list in this demo previously left only one of six
 models working. The API still has a static catalogue in
-[`ChatController.AvailableModels`](../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs),
+[`ChatController.AvailableModels`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs),
 but it is used as metadata and fallback. The normal path is to fetch the live
 model list from the SDK.
 
@@ -168,6 +168,6 @@ model list from the SDK.
 - [The retail domain](./03-retail-analytics.md)
 - [The Blazor front end](./04-blazor-ui.md)
 - Source:
-  [`CopilotChatService.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs),
-  [`Program.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Program.cs),
-  [`ChatController.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs)
+  [`CopilotChatService.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs),
+  [`Program.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Program.cs),
+  [`ChatController.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs)

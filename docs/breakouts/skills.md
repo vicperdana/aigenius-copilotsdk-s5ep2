@@ -121,6 +121,6 @@ domain rules, examples, checklists, and output formats.
 
 - [Custom agents](./custom-agents.md)
 - [Architecture](./architecture.md)
-- [Skills folder](../../.github/skills/)
-- [Shared Copilot instructions](../../.github/copilot-instructions.md)
+- [Skills folder](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/.github/skills)
+- [Shared Copilot instructions](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/copilot-instructions.md)
 - [Demo materials](../demos/)

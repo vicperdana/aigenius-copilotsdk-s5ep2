@@ -102,7 +102,7 @@ to inspect when you want token and cost telemetry rather than text content.
 ## Step 3 — Subscribe with the v1 pattern
 
 Open
-[`EventsSample.cs`](../../../src/AgentOrchestrator/samples/SdkLabs/EventsSample.cs)
+[`EventsSample.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/samples/SdkLabs/EventsSample.cs)
 and find the subscription:
 
 ```csharp
@@ -135,7 +135,7 @@ The sample logs almost everything so you can learn the lifecycle. The real app
 does not need all of that.
 
 Open
-[`CopilotChatService.cs`](../../../src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs)
+[`CopilotChatService.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs)
 and look at the event switch. It handles only four event types:
 
 ```csharp

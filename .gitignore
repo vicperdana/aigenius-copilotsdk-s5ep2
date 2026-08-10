@@ -24,3 +24,6 @@ logs/*.log
 
 # MkDocs build output
 site/
+
+# Generated site landing page
+docs/index.md

@@ -29,5 +29,5 @@ back.
 
 - [Labs](../labs/) — hands-on exercises
 - [Demos](../demos/) — code walkthroughs
-- [Root README](../../README.md) — quick start and endpoint reference
-- [`AGENTS.md`](../../AGENTS.md) — repository rules for AI agents
+- [Root README](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/README.md) — quick start and endpoint reference
+- [`AGENTS.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/AGENTS.md) — repository rules for AI agents

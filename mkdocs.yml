@@ -1,0 +1,123 @@
+site_name: AI Genius S5E2 — Agent HQ Demo
+site_description: >-
+  Build a retail analytics assistant with the GitHub Copilot SDK — hands-on
+  labs, code walkthroughs, and reference material.
+site_author: Vic Perdana
+repo_url: https://github.com/vicperdana/aigenius-copilotsdk-s5ep2
+repo_name: vicperdana/aigenius-copilotsdk-s5ep2
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: en
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    # Follows the OS preference, with a manual toggle either way.
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.instant
+    - navigation.tracking
+    - navigation.indexes
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+    - content.action.edit
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  # Required so ```mermaid blocks render as diagrams rather than code.
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  - search
+
+# docs/README.md is the GitHub-facing index for the docs folder; on the site
+# that role is taken by index.md (generated from the root README), so exclude
+# it to avoid a conflicting URL. Section READMEs are kept and used as their
+# section landing pages.
+exclude_docs: |
+  /README.md
+
+nav:
+  - Home: index.md
+  - Labs:
+      - Overview: labs/README.md
+      - 01 — Setup: labs/01-setup/README.md
+      - 02 — First chat: labs/02-first-chat/README.md
+      - 03 — Tools: labs/03-tools/README.md
+      - 04 — Events: labs/04-events/README.md
+      - 05 — Sessions: labs/05-sessions/README.md
+      - 06 — MCP: labs/06-mcp/README.md
+      - 07 — Wrap-up: labs/07-wrap-up/README.md
+      - Extras:
+          - Custom agents: labs/extra-custom-agents/README.md
+          - Governance hooks: labs/extra-governance-hooks/README.md
+          - Extend the API: labs/extra-extend-api/README.md
+  - Demos:
+      - Overview: demos/README.md
+      - Copilot SDK integration: demos/01-copilot-sdk-integration.md
+      - SSE streaming: demos/02-sse-streaming.md
+      - Retail analytics: demos/03-retail-analytics.md
+      - Blazor UI: demos/04-blazor-ui.md
+      - Demo script: demos/demo-script.md
+  - Breakouts:
+      - Overview: breakouts/README.md
+      - Architecture: breakouts/architecture.md
+      - Custom agents: breakouts/custom-agents.md
+      - Hooks and governance: breakouts/hooks-and-governance.md
+      - Skills: breakouts/skills.md
+      - Troubleshooting: breakouts/troubleshooting.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/vicperdana/aigenius-copilotsdk-s5ep2
+      name: Repository
+
+copyright: >-
+  Code licensed under MIT · Documentation licensed under CC BY 4.0

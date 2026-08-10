@@ -6,7 +6,7 @@ flushes matter, and how the client parses streamed chunks.
 
 ## API entry point
 
-[`ChatController.StreamChat`](../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs)
+[`ChatController.StreamChat`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs)
 handles `POST /api/chat/stream`. It accepts a `ChatRequest`, chooses the
 requested model or the `claude-haiku-4.5` default, and configures the response as
 Server-Sent Events:
@@ -23,7 +23,7 @@ stream, not a normal JSON response that should be buffered until completion.
 ## Wire format
 
 For each chunk from
-[`CopilotChatService.ChatStreamAsync`](../../src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs),
+[`CopilotChatService.ChatStreamAsync`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs),
 the controller serialises a small JSON object and writes one SSE message:
 
 ```text
@@ -74,7 +74,7 @@ has a path to stop writing and unwind the streaming work.
 ## Browser client
 
 The Blazor client code lives in
-[`ChatService.StreamChatAsync`](../../src/AgentOrchestrator/AgentHQDemo.Web/Services/ChatService.cs).
+[`ChatService.StreamChatAsync`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Services/ChatService.cs).
 It posts to `/api/chat/stream` with `HttpCompletionOption.ResponseHeadersRead`:
 
 ```csharp
@@ -99,7 +99,7 @@ for a grocery retailer, gives it the demo context, and asks for data-driven
 business insights using markdown tables and bullet points. It also tells the
 assistant not to modify code or suggest code changes.
 
-[`Home.razor`](../../src/AgentOrchestrator/AgentHQDemo.Web/Pages/Home.razor)
+[`Home.razor`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Pages/Home.razor)
 passes the user's prompt and selected model to `ChatService.StreamChatAsync`.
 The default system prompt is therefore applied by the client service before the
 request reaches the API.
@@ -129,7 +129,7 @@ You should see multiple `data: {"content":"..."}` messages followed by
 - [The retail domain](./03-retail-analytics.md)
 - [The Blazor front end](./04-blazor-ui.md)
 - Source:
-  [`ChatController.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs),
-  [`CopilotChatService.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs),
-  [`ChatService.cs`](../../src/AgentOrchestrator/AgentHQDemo.Web/Services/ChatService.cs),
-  [`Home.razor`](../../src/AgentOrchestrator/AgentHQDemo.Web/Pages/Home.razor)
+  [`ChatController.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs),
+  [`CopilotChatService.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs),
+  [`ChatService.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Services/ChatService.cs),
+  [`Home.razor`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Web/Pages/Home.razor)

@@ -7,25 +7,25 @@ smells that are present for code-review demonstrations.
 ## Domain models
 
 The API models live under
-[`AgentHQDemo.Api/Models`](../../src/AgentOrchestrator/AgentHQDemo.Api/Models).
+[`AgentHQDemo.Api/Models`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/src/AgentOrchestrator/AgentHQDemo.Api/Models).
 
-[`Transaction`](../../src/AgentOrchestrator/AgentHQDemo.Api/Models/Transaction.cs)
+[`Transaction`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Models/Transaction.cs)
 represents one retail purchase. It has an integer `Id`, `CustomerId`, `Amount`,
 `ProductCategory`, `StoreId`, `Timestamp`, and `IsFlagged`. The model includes
 Data Annotations such as `Required`, `StringLength`, and `Range`, which ASP.NET
 Core model binding can use when controllers check `ModelState`.
 
-[`CustomerSegment`](../../src/AgentOrchestrator/AgentHQDemo.Api/Models/CustomerSegment.cs)
+[`CustomerSegment`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Models/CustomerSegment.cs)
 represents an analytics segment. It stores the segment name, description,
 customer count, average monthly spend, and retention rate.
 
-[`SegmentPrediction`](../../src/AgentOrchestrator/AgentHQDemo.Api/Models/SegmentPrediction.cs)
+[`SegmentPrediction`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Models/SegmentPrediction.cs)
 is an immutable record returned by prediction calls. It contains the customer
 ID, predicted segment, confidence score, and top feature names.
 
 ## Database and startup seeding
 
-[`RetailDbContext`](../../src/AgentOrchestrator/AgentHQDemo.Api/Data/RetailDbContext.cs)
+[`RetailDbContext`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Data/RetailDbContext.cs)
 is a small EF Core context with two sets:
 
 ```csharp
@@ -33,7 +33,7 @@ public DbSet<Transaction> Transactions => Set<Transaction>();
 public DbSet<CustomerSegment> Segments => Set<CustomerSegment>();
 ```
 
-[`Program.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Program.cs)
+[`Program.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Program.cs)
 configures SQLite with `Data Source=retail.db`, registers
 `RetailAnalyticsService`, and seeds data during application startup:
 
@@ -69,7 +69,7 @@ It also creates four customer segments:
 
 ## REST endpoints
 
-[`TransactionsController`](../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/TransactionsController.cs)
+[`TransactionsController`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/TransactionsController.cs)
 exposes transaction read, create, and delete endpoints:
 
 | Endpoint | Returns |
@@ -79,7 +79,7 @@ exposes transaction read, create, and delete endpoints:
 | `POST /api/transactions` | Creates a transaction and returns `201 Created` with the saved record. |
 | `DELETE /api/transactions/{id}` | `204 No Content` when deleted, or `404` when not found. |
 
-[`SegmentsController`](../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/SegmentsController.cs)
+[`SegmentsController`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/SegmentsController.cs)
 exposes segment and prediction endpoints:
 
 | Endpoint | Returns |
@@ -94,7 +94,7 @@ the Copilot streaming path rather than the retail data API.
 
 ## Segment prediction logic
 
-[`RetailAnalyticsService.PredictSegmentAsync`](../../src/AgentOrchestrator/AgentHQDemo.Api/Services/RetailAnalyticsService.cs)
+[`RetailAnalyticsService.PredictSegmentAsync`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Services/RetailAnalyticsService.cs)
 loads all transactions for a customer and derives total spend, average spend,
 and purchase frequency. It then applies these rules in order:
 
@@ -170,9 +170,9 @@ a policy object, name it clearly, and cover the boundary behaviour in tests."
 - [Streaming responses over SSE](./02-sse-streaming.md)
 - [The Blazor front end](./04-blazor-ui.md)
 - Source:
-  [`RetailAnalyticsService.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Services/RetailAnalyticsService.cs),
-  [`RetailDbContext.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Data/RetailDbContext.cs),
-  [`Program.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Program.cs),
-  [`Models`](../../src/AgentOrchestrator/AgentHQDemo.Api/Models),
-  [`TransactionsController.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/TransactionsController.cs),
-  [`SegmentsController.cs`](../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/SegmentsController.cs)
+  [`RetailAnalyticsService.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Services/RetailAnalyticsService.cs),
+  [`RetailDbContext.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Data/RetailDbContext.cs),
+  [`Program.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Program.cs),
+  [`Models`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/src/AgentOrchestrator/AgentHQDemo.Api/Models),
+  [`TransactionsController.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/TransactionsController.cs),
+  [`SegmentsController.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/SegmentsController.cs)

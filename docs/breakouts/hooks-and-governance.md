@@ -169,6 +169,6 @@ only `preToolUse` if you are testing the security gate configuration.
 
 - [Architecture](./architecture.md)
 - [Troubleshooting](./troubleshooting.md)
-- [Governance config](../../.github/hooks/retail-governance.json)
-- [Hook scripts](../../.github/hooks/scripts/)
-- [Repository agent guidelines](../../AGENTS.md)
+- [Governance config](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/hooks/retail-governance.json)
+- [Hook scripts](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/.github/hooks/scripts)
+- [Repository agent guidelines](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/AGENTS.md)

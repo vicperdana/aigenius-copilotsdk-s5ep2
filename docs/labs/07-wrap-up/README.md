@@ -112,7 +112,7 @@ git checkout -- .        # discards uncommitted changes — irreversible
 
 | Direction | Start here |
 |:----------|:-----------|
-| Re-run a focused SDK sample | [`SdkLabs`](../../../src/AgentOrchestrator/samples/SdkLabs/) |
+| Re-run a focused SDK sample | [`SdkLabs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/tree/main/src/AgentOrchestrator/samples/SdkLabs) |
 | Understand the demo code in depth | [Demos](../../demos/) |
 | Reference troubleshooting and architecture | [Breakouts](../../breakouts/) |
 | Build your own agent app | [Copilot SDK repo](https://github.com/github/copilot-sdk) |
@@ -139,5 +139,5 @@ git checkout -- .        # discards uncommitted changes — irreversible
 ## Related
 
 - [Labs index](../README.md)
-- [Root README](../../../README.md)
-- [`AGENTS.md`](../../../AGENTS.md)
+- [Root README](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/README.md)
+- [`AGENTS.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/AGENTS.md)

@@ -19,7 +19,7 @@ runnable.
    Copilot offers to clean up `GetTransactionsWithSegmentsAsync`, decline.
 2. **Keep all 14 existing tests passing.** New tests add to that number.
 3. Follow the conventions in
-   [`copilot-instructions.md`](../../../.github/copilot-instructions.md) —
+   [`copilot-instructions.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/copilot-instructions.md) —
    file-scoped namespaces, primary constructors, `async`/`Async` suffix,
    `CancellationToken`, `record` DTOs.
 
@@ -242,7 +242,7 @@ Close the loop with Lab 03's agent:
 copilot --agent dotnet-reviewer -p "Review my uncommitted changes for correctness, async usage, and adherence to .github/copilot-instructions.md. Report only." --allow-all-tools
 ```
 
-Then update the API table in the root [`README.md`](../../../README.md) to list
+Then update the API table in the root [`README.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/README.md) to list
 the new endpoint — docs drift is a review finding too.
 
 ## ✅ Checkpoint

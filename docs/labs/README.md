@@ -78,7 +78,7 @@ code-review demonstrations:
 
 [Extra — Custom agents](extra-custom-agents/) asks you to *find* them. Do not
 repair them — the demo script relies on them still being there. See
-[`AGENTS.md`](../../AGENTS.md).
+[`AGENTS.md`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/AGENTS.md).
 
 ## Related
 

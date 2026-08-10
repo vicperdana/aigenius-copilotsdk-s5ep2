@@ -42,7 +42,7 @@ Three things to notice:
 
 ## Step 2 — Find the server side
 
-Open [`ChatController.cs`](../../../src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs)
+Open [`ChatController.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Controllers/ChatController.cs)
 and locate `StreamChat`. Note in order:
 
 - `Response.ContentType = "text/event-stream"` plus `no-cache` and keep-alive
@@ -62,7 +62,7 @@ there is no status code left to change.
 
 ## Step 3 — Find the SDK integration
 
-Open [`CopilotChatService.cs`](../../../src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs).
+Open [`CopilotChatService.cs`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator/AgentHQDemo.Api/Services/CopilotChatService.cs).
 
 `ChatStreamAsync` creates a session and subscribes to events:
 
