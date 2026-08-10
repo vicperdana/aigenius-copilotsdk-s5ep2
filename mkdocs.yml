@@ -82,6 +82,10 @@ plugins:
 # section landing pages.
 exclude_docs: |
   /README.md
+  /requirements.txt
+
+hooks:
+  - scripts/build_index.py
 
 nav:
   - Home: index.md

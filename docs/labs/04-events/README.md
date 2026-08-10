@@ -21,6 +21,7 @@ Expected output:
 ```
 == Lab 04: events ==
 
+Model: claude-haiku-4.5
 Prompt: Name two retail KPIs. One line each.
 
   1. SessionStartEvent
@@ -45,32 +46,37 @@ Prompt: Name two retail KPIs. One line each.
  20. AssistantStreamingDeltaEvent
  21. AssistantReasoningDeltaEvent
  22. AssistantStreamingDeltaEvent
- 23. AssistantMessageStartEvent
+ 23. AssistantReasoningDeltaEvent
  24. AssistantStreamingDeltaEvent
- 25. AssistantUsageEvent
- 26. AssistantMessageEvent
-     content: **Customer Acquisition Cost (CAC):** Total marketing spend divided by number of …
-     (preceded by 2 delta events)
- 27. AssistantReasoningEvent
- 28. AssistantTurnEndEvent
- 29. HookStartEvent
- 30. HookEndEvent
- 31. SessionUsageCheckpointEvent
- 32. AssistantIdleEvent
- 33. SessionIdleEvent
+ 25. AssistantReasoningDeltaEvent
+ 26. AssistantStreamingDeltaEvent
+ 27. AssistantMessageStartEvent
+ 28. AssistantStreamingDeltaEvent
+ 29. AssistantStreamingDeltaEvent
+ 30. AssistantUsageEvent
+ 31. AssistantMessageEvent
+     content: 1. **Conversion Rate** — The percentage of store visitors or website traffic tha…
+     (preceded by 3 delta events)
+ 32. AssistantReasoningEvent
+ 33. AssistantTurnEndEvent
+ 34. HookStartEvent
+ 35. HookEndEvent
+ 36. SessionUsageCheckpointEvent
+ 37. AssistantIdleEvent
+ 38. SessionIdleEvent
 
-Total delta events: 2
+Total delta events: 3
 ```
 
 The important surprise is the volume. A simple one-prompt exchange emits far
 more than "user message, assistant message, done".
 
 ⚠️ The sample counts `AssistantMessageDeltaEvent` separately and suppresses
-printing those events. That is why `Total delta events: 2` appears even though
+printing those events. That is why `Total delta events: 3` appears even though
 many `AssistantStreamingDeltaEvent` entries are visible in the event list.
 
 ⚠️ **The numbers above are one observed run, not a contract.** The list shows
-33 *printed* events; two more were received and suppressed, so 35 arrived in
+38 *printed* events; three more were received and suppressed, so 41 arrived in
 total. Exact counts and ordering vary by model, prompt and SDK version — read
 the sequence for its shape, not as a fixed specification.
 
@@ -85,11 +91,11 @@ The event stream is easier to remember if you group it by phase:
    in-band, and the session title can change
 3. **Assistant turn start (11–13)** — the assistant turn starts, usage
    information surfaces, and the model call begins
-4. **Streaming (14–24)** — streaming and reasoning deltas arrive, followed by
+4. **Streaming (14–29)** — streaming and reasoning deltas arrive, followed by
    `AssistantMessageStartEvent`
-5. **Completion (25–28)** — assistant usage is reported, the final assistant
+5. **Completion (30–33)** — assistant usage is reported, the final assistant
    message arrives, reasoning is finalised, and the assistant turn ends
-6. **Teardown and idle (29–33)** — another hook pair runs, usage is
+6. **Teardown and idle (34–38)** — another hook pair runs, usage is
    checkpointed, the assistant becomes idle, then the whole session becomes
    idle
 

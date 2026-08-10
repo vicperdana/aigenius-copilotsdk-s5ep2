@@ -43,18 +43,24 @@ public static class ToolsSample
         return $"{customerId} has {matches.Length} transactions totalling {total:C}.";
     }
 
-    public static async Task<int> RunAsync()
+    public static async Task<int> RunAsync(string? requestedModelId)
     {
         Console.WriteLine("== Lab 03: tools ==\n");
 
         await using var client = new CopilotClient();
         await client.StartAsync();
 
+        var modelId = await ModelPicker.PickAsync(client, requestedModelId);
+        if (modelId is null)
+        {
+            return 1;
+        }
+
         var totalTool = CopilotTool.DefineTool(GetCustomerTotal);
 
         var config = new SessionConfig
         {
-            Model = "claude-haiku-4.5",
+            Model = modelId,
             Streaming = false,
             Tools = [totalTool]
         };

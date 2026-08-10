@@ -10,16 +10,22 @@ namespace SdkLabs;
 /// </summary>
 public static class EventsSample
 {
-    public static async Task<int> RunAsync()
+    public static async Task<int> RunAsync(string? requestedModelId)
     {
         Console.WriteLine("== Lab 04: events ==\n");
 
         await using var client = new CopilotClient();
         await client.StartAsync();
 
+        var modelId = await ModelPicker.PickAsync(client, requestedModelId);
+        if (modelId is null)
+        {
+            return 1;
+        }
+
         var config = new SessionConfig
         {
-            Model = "claude-haiku-4.5",
+            Model = modelId,
             Streaming = true
         };
 

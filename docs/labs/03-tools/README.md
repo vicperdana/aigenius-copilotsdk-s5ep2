@@ -52,11 +52,12 @@ public API for another developer.
 `AIFunction`. You then assign that function to the session configuration:
 
 ```csharp
+var modelId = await ModelPicker.PickAsync(client, requestedModelId);
 var totalTool = CopilotTool.DefineTool(GetCustomerTotal);
 
 var config = new SessionConfig
 {
-    Model = "claude-haiku-4.5",
+    Model = modelId,
     Streaming = false,
     Tools = [totalTool]
 };
@@ -64,6 +65,9 @@ var config = new SessionConfig
 
 That `Tools = [totalTool]` line is the difference between "the model has some
 textual context" and "the model can ask the host application to do real work".
+`ModelPicker` keeps `claude-haiku-4.5` as the preferred model for these labs,
+but falls back to a model available to your account. You can override it with
+`--model <id>`.
 
 ## Step 4 — Run it
 
@@ -76,6 +80,7 @@ Expected output:
 ```
 == Lab 03: tools ==
 
+Model: claude-haiku-4.5
 Prompt: How much has customer C003 spent in total?
 
 

@@ -18,6 +18,11 @@ CLI, resume it from a web app, then pick it up later from a phone. That is the
 core pattern behind "your agent, anywhere": the client changes, but the session
 history stays attached to the same id.
 
+This sample first demonstrates the narrower proof: resume after disposing a
+session in the same process and the same `CopilotClient`. It also supports
+`--resume <id>` so you can try a second, separate process when your environment
+uses the same session persistence store and runtime.
+
 ## Step 2 — Create a session with a known id
 
 Open
@@ -34,7 +39,7 @@ Then find where it is passed to the SDK:
 await using var session = await client.CreateSessionAsync(new SessionConfig
 {
     SessionId = sessionId,
-    Model = "claude-haiku-4.5",
+    Model = modelId,
     Streaming = false
 });
 ```
@@ -56,29 +61,31 @@ dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- sessions
 Expected output:
 
 ```
-== Lab 06: sessions ==
+== Lab 05: sessions ==
 
-Session id: sdklabs-b6f3d805dd4a4767
+Model: claude-haiku-4.5
+Session id: sdklabs-7946e93975844b2e
 
 --- Turn 1 (new session) ---
 You: Remember this: my favourite retail segment is 'At Risk'. Reply with just OK.
-Assistant: OK
+Assistant: OK.
 
 Session disposed.
 
 --- Turn 2 (resumed session) ---
 You: Which retail segment did I say was my favourite?
-Assistant: Your favourite retail segment is 'At Risk'.
+Assistant: 'At Risk'.
 
 --- Session metadata ---
-  id=sdklabs-b6f3d805dd4a4767 metadata retrieved
+  id=sdklabs-7946e93975844b2e metadata retrieved
 ```
 
-The banner still says `Lab 06` because the sample was written before the labs
-were renumbered. The session id is random per run, so yours will differ.
+The session id is random per run, so yours will differ. The important proof is
+not the id value. It is that turn 2 remembered `'At Risk'` after the first
+session had been disposed.
 
-The important proof is not the id value. It is that turn 2 remembered
-`'At Risk'` after the first session had been disposed.
+This run proves resume-after-disposal inside one process. It does not, by
+itself, prove cross-device hand-off or restart recovery.
 
 ## Step 4 — Resume the session
 
@@ -89,7 +96,7 @@ await using var resumed = await client.ResumeSessionAsync(
     sessionId,
     new ResumeSessionConfig
     {
-        Model = "claude-haiku-4.5",
+        Model = modelId,
         Streaming = false
     });
 ```
@@ -107,6 +114,33 @@ configuration parameter.
 uses `SessionConfig`; resuming an existing one uses `ResumeSessionConfig`.
 The resume config carries the same kind of settings used here, including
 `Model` and `Streaming`, but it is a different type.
+
+To make the proof stronger, run the resume path in a second process using the
+session id printed by the first run:
+
+```bash
+dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- sessions --resume sdklabs-7946e93975844b2e
+```
+
+Verified output from a second invocation:
+
+```
+== Lab 05: sessions ==
+
+Model: claude-haiku-4.5
+Session id: sdklabs-7946e93975844b2e
+
+--- Resumed existing session ---
+You: Which retail segment did I say was my favourite?
+Assistant: 'At Risk'.
+
+--- Session metadata ---
+  id=sdklabs-7946e93975844b2e metadata retrieved
+```
+
+That second command genuinely crosses a process boundary. Resuming from another
+machine additionally requires access to the same session persistence store, the
+same compatible runtime, and proper authorisation.
 
 ## Step 5 — Discover stored sessions
 
@@ -146,8 +180,12 @@ the conversation to another device. If you open the app on a phone or another
 machine, the history is gone.
 
 SDK sessions are the fix. The UI can store a session id instead of the whole
-conversation, and any client that knows that id can resume the same server-side
-session.
+conversation, and an authorised client using the same session store can resume
+the same server-side session.
+
+⚠️ **A session id is not an access control.** Treat ids as identifiers, not
+secrets or capabilities. Your app still needs normal user authentication and
+authorisation before resuming a stored conversation.
 
 ## ⚠️ Traps
 
@@ -155,6 +193,8 @@ session.
   conversation instead of creating a clean one.
 - **Opaque ids:** random ids work for demos, but real systems should be able to
   map ids back to users, cases or workflows.
+- **Ids are not permissions:** knowing or guessing an id must not be enough to
+  access a conversation; enforce authorisation separately.
 - **Secrets in ids:** never include tokens, email addresses, customer secrets or
   confidential data in a session id.
 - **Wrong resume overload:** `ResumeSessionAsync(sessionId)` fails with
@@ -181,7 +221,7 @@ Then pass the selected id to:
 ```csharp
 await client.ResumeSessionAsync(id, new ResumeSessionConfig
 {
-    Model = "claude-haiku-4.5",
+    Model = modelId,
     Streaming = false
 });
 ```
@@ -196,6 +236,8 @@ You can now explain:
 - [x] How `GetSessionMetadataAsync` and `ListSessionsAsync(...)` help discover
   stored sessions
 - [x] Why SDK sessions are the right foundation for cross-device chat history
+- [x] Why cross-process and cross-device resume also depend on shared storage,
+  compatible runtime behaviour, and authorisation
 
 ## Related
 

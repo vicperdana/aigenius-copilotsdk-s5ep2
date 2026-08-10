@@ -6,17 +6,28 @@ namespace SdkLabs;
 /// Lab 05 — persist and resume a session.
 ///
 /// Creates a session with a known id, sends a message, disposes it, then
-/// resumes the *same* session in a fresh call and checks the agent still has
-/// the earlier context. This is the "your agent, anywhere" building block.
+/// resumes the *same* session. Passing <c>--resume &lt;id&gt;</c> lets readers
+/// prove the same idea from a second process when the same store is available.
 /// </summary>
 public static class SessionsSample
 {
-    public static async Task<int> RunAsync()
+    public static async Task<int> RunAsync(string? requestedModelId, string? resumeSessionId)
     {
         Console.WriteLine("== Lab 05: sessions ==\n");
 
         await using var client = new CopilotClient();
         await client.StartAsync();
+
+        var modelId = await ModelPicker.PickAsync(client, requestedModelId);
+        if (modelId is null)
+        {
+            return 1;
+        }
+
+        if (!string.IsNullOrWhiteSpace(resumeSessionId))
+        {
+            return await ResumeExistingAsync(client, resumeSessionId, modelId);
+        }
 
         var sessionId = $"sdklabs-{Guid.NewGuid():N}"[..24];
         Console.WriteLine($"Session id: {sessionId}\n");
@@ -26,7 +37,7 @@ public static class SessionsSample
         await using (var session = await client.CreateSessionAsync(new SessionConfig
         {
             SessionId = sessionId,
-            Model = "claude-haiku-4.5",
+            Model = modelId,
             Streaming = false
         }))
         {
@@ -40,7 +51,7 @@ public static class SessionsSample
         Console.WriteLine("--- Turn 2 (resumed session) ---");
         await using (var resumed = await client.ResumeSessionAsync(sessionId, new ResumeSessionConfig
         {
-            Model = "claude-haiku-4.5",
+            Model = modelId,
             Streaming = false
         }))
         {
@@ -49,6 +60,33 @@ public static class SessionsSample
         }
 
         // --- Inspect stored sessions -------------------------------------
+        Console.WriteLine("\n--- Session metadata ---");
+        var metadata = await client.GetSessionMetadataAsync(sessionId);
+        Console.WriteLine(metadata is null
+            ? "  (no metadata returned)"
+            : $"  id={sessionId} metadata retrieved");
+
+        return 0;
+    }
+
+    private static async Task<int> ResumeExistingAsync(
+        CopilotClient client,
+        string sessionId,
+        string modelId)
+    {
+        Console.WriteLine($"Session id: {sessionId}\n");
+        Console.WriteLine("--- Resumed existing session ---");
+
+        await using (var resumed = await client.ResumeSessionAsync(sessionId, new ResumeSessionConfig
+        {
+            Model = modelId,
+            Streaming = false
+        }))
+        {
+            await SendAndPrintAsync(resumed,
+                "Which retail segment did I say was my favourite?");
+        }
+
         Console.WriteLine("\n--- Session metadata ---");
         var metadata = await client.GetSessionMetadataAsync(sessionId);
         Console.WriteLine(metadata is null

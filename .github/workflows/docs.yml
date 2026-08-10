@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - docs/**
+      - docs/requirements.txt
       - mkdocs.yml
       - scripts/build_index.py
       - scripts/rewrite_doc_links.py
@@ -13,6 +14,7 @@ on:
   pull_request:
     paths:
       - docs/**
+      - docs/requirements.txt
       - mkdocs.yml
       - scripts/build_index.py
       - scripts/rewrite_doc_links.py
@@ -40,8 +42,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install MkDocs Material
-        run: pip install mkdocs-material
+      - name: Install docs dependencies
+        run: pip install -r docs/requirements.txt
 
       - name: Generate landing page from README
         run: python3 scripts/build_index.py

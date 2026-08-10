@@ -56,9 +56,11 @@ Open
 and find the `SessionConfig`:
 
 ```csharp
+var modelId = await ModelPicker.PickAsync(client, requestedModelId);
+
 var config = new SessionConfig
 {
-    Model = "claude-haiku-4.5",
+    Model = modelId,
     Streaming = false,
     McpServers = new Dictionary<string, McpServerConfig>
     {
@@ -90,31 +92,83 @@ dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- mcp
 Expected output from a verified run:
 
 ```
-== Lab 07: mcp ==
+== Lab 06: mcp ==
 
+Model: claude-haiku-4.5
 Prompt: asking the model to consult Microsoft Learn docs
 
+  [mcp] SessionMcpServersLoadedEvent
 
-Assistant: Based on Microsoft Learn documentation:  **Azure Container Apps** is a serverless platform that enables you to run containerized applications without managing underlying infrastructure, automatically handling scaling and deployment. It's ideal for deploying API endpoints, background jobs, event-driven processing, and microservices while reducing operational overhead and costs.
+Assistant: I don't have dedicated "Microsoft Learn tools" in my available toolset.
+However, I can use the `web_fetch` tool to retrieve current information.
+  [tool] ToolExecutionStartEvent: web_fetch
+  [tool] ToolExecutionCompleteEvent: web_fetch (success=True)
+
+Assistant: Based on Microsoft Learn documentation: **Azure Container Apps is a
+serverless platform for running containerized applications without managing the
+underlying infrastructure.** It supports API endpoints, background jobs,
+event-driven processing and microservices, scaling automatically.
+
+⚠️  No MCP tool was invoked.
+    The model used non-MCP tool(s) instead: web_fetch
+    The answer may have come from the model's own knowledge or a built-in
+    tool rather than Microsoft Learn. Check the server is reachable and that
+    its tools were loaded — look for the [mcp] lines above.
 ```
 
-The banner still says `Lab 07` because the sample was written before the labs
-were renumbered. The assistant's exact wording can vary between runs, but it
-should answer as though it consulted Microsoft Learn.
+⚠️ **Read that output carefully — this is the whole point of the lab.**
+
+The answer looks authoritative and even cites Microsoft Learn. It is also
+**not** an MCP result. `SessionMcpServersLoadedEvent` fired, so the server
+config was accepted, but its tools were never offered to the model — so the
+model fell back to the built-in `web_fetch` and produced a plausible answer
+anyway.
+
+Without the check at the end you would have called this a successful MCP demo.
+That is exactly the false pass this sample exists to prevent, and it is why the
+sample exits **non-zero** here.
+
+> **Status in this environment:** the Learn MCP server loads but does not
+> surface tools to the session. Treat the ⚠️ path above as the expected output
+> until that is resolved. If MCP tools *do* load for you, the final line reads
+> `✅ MCP tool(s) invoked: <server>/<tool>` and the exit code is 0.
 
 ## Step 4 — Check that the MCP tools were used
 
-The visible clue is the answer itself: it says it is based on Microsoft Learn
-documentation and gives a docs-style definition of Azure Container Apps.
+The sample subscribes to SDK events and logs the ones that matter:
 
-For a stronger signal, reuse the idea from [Lab 04](../04-events/): subscribe
-to SDK events and log tool-related events while the session runs. That lets you
-observe the model deciding to call an MCP tool rather than only judging the
-final answer.
+- `SessionMcpServersLoadedEvent` — the server configuration was accepted
+- `McpToolsListChangedEvent` — the server published its tool list
+- `ToolExecutionStartEvent` / `ToolExecutionCompleteEvent` — a tool actually ran
 
-This matters because a plausible answer is not enough proof. Azure Container
-Apps is public knowledge, so a model can answer from its own training data even
-when no MCP tool was available.
+The critical detail is how a tool is judged to be *MCP*. `ToolExecutionStartEvent`
+carries an `McpServerName`; only executions where that is set count. A built-in
+such as `web_fetch` has no server name, so it is logged but never counted as
+success:
+
+```csharp
+if (!string.IsNullOrWhiteSpace(start.Data.McpServerName))
+{
+    mcpTools.Add(toolName);
+}
+```
+
+⚠️ An earlier version of this sample counted *any* tool execution and happily
+reported `✅ MCP tool(s) invoked: web_fetch` — success for a tool that has
+nothing to do with MCP. Counting the wrong thing is worse than not checking,
+because it manufactures confidence.
+
+If no MCP tool ran, the sample prints:
+
+```text
+⚠️  No MCP tool was invoked.
+    The model used non-MCP tool(s) instead: web_fetch
+```
+
+and exits non-zero so scripts cannot mistake a plausible model-only answer for
+a successful MCP-backed run. This matters because Azure Container Apps is public
+knowledge, so a model can answer from its own training data even when no MCP
+tool was available.
 
 ## Step 5 — Compare with the editor MCP configuration
 
@@ -145,8 +199,8 @@ serve an editor, a CLI, a test harness or an application agent.
   `IDictionary<string, McpServerConfig>`, so this common shortcut fails with a
   compile error such as `CS0266` because the value type cannot be converted.
 - The Learn server is reached over the network. If it is unreachable, the model
-  has no MCP tools and may quietly answer from its own knowledge. That is easy
-  to mistake for success unless you log tool events.
+  has no MCP tools and may quietly answer from its own knowledge. The sample now
+  exits non-zero unless it observes a `ToolExecutionStartEvent`.
 - MCP servers are third-party code and can expose powerful capabilities. Vet the
   server, its permissions and its data access before adding it to an agent that
   handles real work.

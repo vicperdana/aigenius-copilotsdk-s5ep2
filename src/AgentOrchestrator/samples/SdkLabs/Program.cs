@@ -11,16 +11,46 @@ public static class Program
     public static async Task<int> Main(string[] args)
     {
         var command = args.FirstOrDefault();
+        var options = ParseOptions(args.Skip(1).ToArray());
+
+        if (options is null)
+        {
+            return Usage();
+        }
 
         return command switch
         {
-            "tools" => await ToolsSample.RunAsync(),
-            "events" => await EventsSample.RunAsync(),
-            "sessions" => await SessionsSample.RunAsync(),
-            "mcp" => await McpSample.RunAsync(),
-            "permissions" => await PermissionsSample.RunAsync(),
+            "tools" => await ToolsSample.RunAsync(options.ModelId),
+            "events" => await EventsSample.RunAsync(options.ModelId),
+            "sessions" => await SessionsSample.RunAsync(options.ModelId, options.ResumeSessionId),
+            "mcp" => await McpSample.RunAsync(options.ModelId),
+            "permissions" => await PermissionsSample.RunAsync(options.ModelId),
             _ => Usage()
         };
+    }
+
+    private static SampleOptions? ParseOptions(string[] args)
+    {
+        string? modelId = null;
+        string? resumeSessionId = null;
+
+        for (var i = 0; i < args.Length; i++)
+        {
+            switch (args[i])
+            {
+                case "--model" when i + 1 < args.Length:
+                    modelId = args[++i];
+                    break;
+                case "--resume" when i + 1 < args.Length:
+                    resumeSessionId = args[++i];
+                    break;
+                default:
+                    Console.WriteLine($"Unknown or incomplete option: {args[i]}");
+                    return null;
+            }
+        }
+
+        return new SampleOptions(modelId, resumeSessionId);
     }
 
     private static int Usage()
@@ -29,7 +59,7 @@ public static class Program
             SdkLabs — runnable samples for the Copilot SDK labs.
 
             Usage:
-              dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- <command>
+              dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- <command> [--model <id>]
 
             Commands:
               tools         Lab 03 — define a tool the model can call
@@ -47,4 +77,6 @@ public static class Program
             """);
         return 1;
     }
+
+    private sealed record SampleOptions(string? ModelId, string? ResumeSessionId);
 }
