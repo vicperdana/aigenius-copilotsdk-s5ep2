@@ -7,20 +7,32 @@ sections.
 
 | Section | What it is | Start here |
 |:--------|:-----------|:-----------|
-| [**Labs**](labs/) | Numbered hands-on exercises, ~2 hours end to end | [Lab 01 — Setup](labs/01-setup/) |
+| [**Labs**](labs/) | Hands-on Copilot SDK exercises, ~2 hours end to end | [Lab 01 — Setup](labs/01-setup/) |
 | [**Demos**](demos/) | Walkthroughs explaining the code in [`/src`](../src/AgentOrchestrator/) | [Copilot SDK integration](demos/01-copilot-sdk-integration.md) |
 | [**Breakouts**](breakouts/) | Diagrams, configuration reference, troubleshooting | [Architecture](breakouts/architecture.md) |
 
-### Labs
+### Labs — the SDK path
 
 | # | Lab | Time |
 |:--|:----|:-----|
 | 01 | [Setup](labs/01-setup/) — build, run, verify | ~15 min |
 | 02 | [First chat](labs/02-first-chat/) — SSE streaming and runtime models | ~20 min |
-| 03 | [Custom agents](labs/03-custom-agents/) — agent-assisted code review | ~20 min |
-| 04 | [Governance hooks](labs/04-governance-hooks/) — make the security gate fire | ~20 min |
-| 05 | [Extend the API](labs/05-extend-api/) — new endpoint with tests | ~30 min |
-| 06 | [Wrap-up](labs/06-wrap-up/) — consolidate and clean up | ~10 min |
+| 03 | [Tools](labs/03-tools/) — `CopilotTool.DefineTool` | ~20 min |
+| 04 | [Events](labs/04-events/) — the session event lifecycle | ~20 min |
+| 05 | [Sessions](labs/05-sessions/) — persistence and resume | ~20 min |
+| 06 | [MCP](labs/06-mcp/) — attach an MCP server | ~20 min |
+| 07 | [Wrap-up](labs/07-wrap-up/) — consolidate and clean up | ~10 min |
+
+Backed by a runnable samples project at
+[`src/AgentOrchestrator/samples/SdkLabs`](../src/AgentOrchestrator/samples/SdkLabs).
+
+### Labs — extras (not the SDK)
+
+Optional. These cover Copilot **CLI** and general app development.
+
+[Custom agents](labs/extra-custom-agents/) ·
+[Governance hooks](labs/extra-governance-hooks/) ·
+[Extend the API](labs/extra-extend-api/)
 
 ### Demos
 

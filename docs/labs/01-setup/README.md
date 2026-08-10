@@ -1,7 +1,7 @@
 # Lab 01 — Setup
 
-**Goal:** get the Agent HQ demo building and running locally, with both
-services up and a live streaming chat response coming back from a real model.
+**Goal:** set up to work with the Copilot SDK, using the Agent HQ demo app as
+the runnable vehicle for SDK sessions, streaming, and samples.
 
 **Time:** ~15 minutes
 
@@ -157,7 +157,31 @@ something failed. Two common causes:
   apart. Run `copilot --version` and check
   [troubleshooting](../../breakouts/troubleshooting.md).
 
-## Step 8 — Try the UI
+## Step 8 — Verify the SDK labs samples
+
+Every later SDK lab uses the samples project, so build it once and confirm the
+CLI entry point is reachable:
+
+```bash
+dotnet build src/AgentOrchestrator/samples/SdkLabs
+dotnet run --project src/AgentOrchestrator/samples/SdkLabs
+```
+
+Expected: the build succeeds, then running with no arguments prints the usage
+banner listing the five sample commands:
+
+```
+tools
+events
+permissions
+sessions
+mcp
+```
+
+That confirms the SDK loaded, the project can execute, and the lab commands are
+available for the next steps.
+
+## Step 9 — Try the UI
 
 Back in the browser at <http://localhost:5051>:
 
@@ -174,6 +198,7 @@ You should now have:
 - [x] API on 5050, UI on 5051
 - [x] REST endpoints returning seeded data
 - [x] A live streamed response from a real model
+- [x] The SDK labs samples project building and printing its command banner
 
 ## 💡 Extra credit
 

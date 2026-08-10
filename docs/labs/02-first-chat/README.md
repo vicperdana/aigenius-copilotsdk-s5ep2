@@ -162,6 +162,10 @@ Compare by dropping `systemMessage` and re-running. The Blazor client always
 sends a retail-analytics system message, which is why the UI feels
 domain-aware — see `ChatService.StreamChatAsync`.
 
+This lab fed context through a **system message**. That is static and burns
+tokens on every call. Lab 03 replaces that with a **tool** the model can call
+on demand when it actually needs retail data.
+
 ## ✅ Checkpoint
 
 You can now explain:
@@ -174,6 +178,6 @@ You can now explain:
 
 ## Related
 
-- Next: [Lab 03 — Custom agents](../03-custom-agents/)
+- Next: [Lab 03 — Tools](../03-tools/)
 - [Demo: Copilot SDK integration](../../demos/01-copilot-sdk-integration.md)
 - [Demo: SSE streaming](../../demos/02-sse-streaming.md)

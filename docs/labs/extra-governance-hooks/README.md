@@ -1,4 +1,10 @@
-# Lab 04 — Governance hooks
+# Extra — Governance hooks
+
+> **📎 Extra lab — not Copilot SDK.**
+> This covers shell hooks driven by `.github/hooks/`, a **Copilot CLI**
+> feature. The SDK has its own in-process equivalent — see the permissions
+> section of [Lab 03 — Tools](../03-tools/). Optional and independent of the
+> numbered SDK path.
 
 **Goal:** make the `preToolUse` security gate genuinely block access to a
 secrets file, watch the audit logger record activity, and learn why a
@@ -6,7 +12,7 @@ misconfigured hook is more dangerous than no hook at all.
 
 **Time:** ~20 minutes
 
-**Prerequisites:** [Lab 03](../03-custom-agents/) complete. `jq` installed —
+**Prerequisites:** [Extra — Custom agents](../extra-custom-agents/) complete. `jq` installed —
 the hook scripts depend on it.
 
 ## Step 1 — See how hooks are wired
@@ -238,6 +244,6 @@ passes.
 
 ## Related
 
-- Next: [Lab 05 — Extend the API](../05-extend-api/)
+- Next: [Extra — Extend the API](../extra-extend-api/)
 - [Breakout: Hooks and governance](../../breakouts/hooks-and-governance.md)
 - [`AGENTS.md`](../../../AGENTS.md) — repository rules for AI agents

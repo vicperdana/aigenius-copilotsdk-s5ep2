@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>SdkLabs</RootNamespace>
+    <!--
+      GHCP001: the permission-decision API (GitHub.Copilot.Rpc.PermissionDecision)
+      is marked experimental in SDK 1.0.9 and raises a build error unless suppressed.
+      Lab 05 uses it deliberately and documents that it may change.
+    -->
+    <NoWarn>$(NoWarn);GHCP001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitHub.Copilot.SDK" Version="1.0.9" />
+  </ItemGroup>
+
+</Project>

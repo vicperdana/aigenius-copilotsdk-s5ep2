@@ -3,6 +3,9 @@
     <Project Path="AgentHQDemo.Api/AgentHQDemo.Api.csproj" />
     <Project Path="AgentHQDemo.Web/AgentHQDemo.Web.csproj" />
   </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/SdkLabs/SdkLabs.csproj" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/AgentHQDemo.Tests/AgentHQDemo.Tests.csproj" />
   </Folder>

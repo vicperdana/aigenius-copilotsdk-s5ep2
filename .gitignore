@@ -21,3 +21,6 @@ logs/*.log
 # Local environment / secrets — never commit
 .env
 .env.*
+
+# MkDocs build output
+site/

@@ -267,7 +267,7 @@ Full documentation lives in [`docs/`](docs/):
 
 | Section | What it is |
 |:--------|:-----------|
-| [**Labs**](docs/labs/) | Six numbered hands-on exercises (~2 hours) — start at [Lab 01](docs/labs/01-setup/) |
+| [**Labs**](docs/labs/) | Seven Copilot SDK exercises (~2 hours) — start at [Lab 01](docs/labs/01-setup/), plus optional extras |
 | [**Demos**](docs/demos/) | Walkthroughs of the code in `/src` |
 | [**Breakouts**](docs/breakouts/) | Architecture diagrams, agents, hooks, [troubleshooting](docs/breakouts/troubleshooting.md) |
 | [**Demo script**](docs/demos/demo-script.md) | Capability-focused presenter talk track |

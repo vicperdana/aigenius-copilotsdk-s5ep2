@@ -1,11 +1,16 @@
-# Lab 05 — Extend the API
+# Extra — Extend the API
+
+> **📎 Extra lab — not Copilot SDK.**
+> This covers ASP.NET Core, EF Core and xUnit in the demo app. It exercises
+> Copilot as a *coding assistant*, but touches none of the Copilot SDK.
+> Optional and independent of the numbered SDK path.
 
 **Goal:** add a new endpoint and its tests using Copilot, keeping the existing
 14 tests green and the deliberate code smells intact.
 
 **Time:** ~30 minutes
 
-**Prerequisites:** [Lab 04](../04-governance-hooks/) complete, both services
+**Prerequisites:** [Extra — Governance hooks](../extra-governance-hooks/) complete, both services
 runnable.
 
 ## ⚠️ Ground rules
@@ -256,6 +261,6 @@ creep in, and write it so it doesn't.
 
 ## Related
 
-- Next: [Lab 06 — Wrap-up](../06-wrap-up/)
+- Next: [Lab 07 — Wrap-up](../07-wrap-up/)
 - [Demo: Retail analytics](../../demos/03-retail-analytics.md)
 - [Breakout: Architecture](../../breakouts/architecture.md)

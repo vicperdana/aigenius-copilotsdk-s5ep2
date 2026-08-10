@@ -1,4 +1,9 @@
-# Lab 03 — Custom agents and code review
+# Extra — Custom agents and code review
+
+> **📎 Extra lab — not Copilot SDK.**
+> This covers `.agent.md` files, a **Copilot CLI** feature, not the Copilot
+> SDK. It's genuinely useful, but optional and independent of the numbered
+> SDK path. Start with [Lab 01](../01-setup/) if you're here for the SDK.
 
 **Goal:** use the repository's custom agents to discover the four deliberate
 code smells, and understand how agents, instructions, and skills combine to
@@ -154,7 +159,7 @@ Ask it to propose (not write) tests for `PredictSegmentAsync`.
 
 ## Related
 
-- Next: [Lab 04 — Governance hooks](../04-governance-hooks/)
+- Next: [Extra — Governance hooks](../extra-governance-hooks/)
 - [Breakout: Custom agents](../../breakouts/custom-agents.md)
 - [Breakout: Skills](../../breakouts/skills.md)
 - [Demo: Retail analytics](../../demos/03-retail-analytics.md)

@@ -1,7 +1,8 @@
 # Labs
 
-Hands-on exercises for the **AI Genius S5E2 — Agent HQ Demo**. Work through
-them in order; each builds on the previous one.
+Hands-on exercises for the **AI Genius S5E2 — Agent HQ Demo**, focused on the
+**GitHub Copilot SDK**. Work through the SDK path in order; each lab builds on
+the previous one.
 
 ## Prerequisites
 
@@ -9,7 +10,7 @@ them in order; each builds on the previous one.
 |:------------|:------|
 | [.NET 10 SDK](https://dotnet.microsoft.com/download) | `dotnet --version` should report `10.x` |
 | [GitHub Copilot CLI](https://docs.github.com/copilot) | `npm install -g @github/copilot`, signed in with Copilot access |
-| `git`, `curl`, `jq` | `jq` is used by the governance hooks |
+| `git`, `curl`, `jq` | `jq` is used by the optional governance-hooks lab |
 | A terminal + editor | VS Code recommended — the repo ships `.vscode/mcp.json` |
 
 Verify before you start:
@@ -17,26 +18,51 @@ Verify before you start:
 ```bash
 dotnet --version     # 10.x
 copilot --version    # 1.x
-jq --version         # any recent version
 ```
 
-## The path
+## 🎯 The SDK path
+
+The core route. Roughly two hours end to end.
 
 | # | Lab | What you'll do | Time |
 |:--|:----|:---------------|:-----|
-| 01 | [Setup](01-setup/) | Build, run both services, verify the API and a live SSE stream | ~15 min |
-| 02 | [First chat](02-first-chat/) | Trace a prompt through the Copilot SDK and switch models | ~20 min |
-| 03 | [Custom agents](03-custom-agents/) | Use the custom agents to review the deliberate code smells | ~20 min |
-| 04 | [Governance hooks](04-governance-hooks/) | Make the security gate block a secret and audit the session | ~20 min |
-| 05 | [Extend the API](05-extend-api/) | Add an endpoint and tests without breaking the suite | ~30 min |
-| 06 | [Wrap-up](06-wrap-up/) | Review, clean up, and pick a next step | ~10 min |
+| 01 | [Setup](01-setup/) | Build and run the app and the SDK samples project | ~15 min |
+| 02 | [First chat](02-first-chat/) | Stream a response; discover models at runtime | ~20 min |
+| 03 | [Tools](03-tools/) | Let the model call your C# with `CopilotTool.DefineTool` | ~20 min |
+| 04 | [Events](04-events/) | Read the session event lifecycle — all 33 of them | ~20 min |
+| 05 | [Sessions](05-sessions/) | Persist and resume a conversation across restarts | ~20 min |
+| 06 | [MCP](06-mcp/) | Attach an MCP server for tools you didn't write | ~20 min |
+| 07 | [Wrap-up](07-wrap-up/) | Consolidate, clean up, pick a next step | ~10 min |
 
-Total: roughly two hours at a comfortable pace.
+### Runnable samples
 
-## Conventions used in these labs
+Labs 03–06 are backed by a real console project, one subcommand per lab:
 
-- Commands are written to be **copy-pasteable** from the repository root
-- Expected output is shown so you can confirm each step worked
+```bash
+dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- tools
+dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- events
+dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- sessions
+dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- mcp
+```
+
+Every command in these labs was executed against the real Copilot CLI and the
+output pasted in as-is.
+
+## 📎 Extra labs — not the SDK
+
+Useful, but they cover **Copilot CLI** and general app development rather than
+the SDK. Optional, and independent of the numbered path.
+
+| Lab | Covers | Why it's extra |
+|:----|:-------|:---------------|
+| [Custom agents](extra-custom-agents/) | `.agent.md` files, agent-assisted review | A CLI feature, not the SDK |
+| [Governance hooks](extra-governance-hooks/) | Shell hooks, security gate, audit log | A CLI feature; the SDK equivalent is in [Lab 03](03-tools/) |
+| [Extend the API](extra-extend-api/) | ASP.NET Core, EF Core, xUnit | Copilot as a coding assistant; touches no SDK |
+
+## Conventions
+
+- Commands are **copy-pasteable** from the repository root
+- Expected output is shown so you can confirm each step
 - ⚠️ marks something that will bite you if skipped
 - 💡 marks optional extra credit
 
@@ -50,8 +76,9 @@ code-review demonstrations:
 - No input validation in `AddTransactionAsync`
 - Hardcoded threshold in `PredictSegmentAsync`
 
-Lab 03 asks you to *find* them. Do not repair them — later labs and the demo
-script rely on them still being there. See [`AGENTS.md`](../../AGENTS.md).
+[Extra — Custom agents](extra-custom-agents/) asks you to *find* them. Do not
+repair them — the demo script relies on them still being there. See
+[`AGENTS.md`](../../AGENTS.md).
 
 ## Related
 
