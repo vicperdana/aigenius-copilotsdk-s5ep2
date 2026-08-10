@@ -69,6 +69,11 @@ more than "user message, assistant message, done".
 printing those events. That is why `Total delta events: 2` appears even though
 many `AssistantStreamingDeltaEvent` entries are visible in the event list.
 
+⚠️ **The numbers above are one observed run, not a contract.** The list shows
+33 *printed* events; two more were received and suppressed, so 35 arrived in
+total. Exact counts and ordering vary by model, prompt and SDK version — read
+the sequence for its shape, not as a fixed specification.
+
 ## Step 2 — Walk the lifecycle phases
 
 The event stream is easier to remember if you group it by phase:

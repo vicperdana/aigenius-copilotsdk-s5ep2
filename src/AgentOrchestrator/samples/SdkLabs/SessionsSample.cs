@@ -3,7 +3,7 @@ using GitHub.Copilot;
 namespace SdkLabs;
 
 /// <summary>
-/// Lab 06 — persist and resume a session.
+/// Lab 05 — persist and resume a session.
 ///
 /// Creates a session with a known id, sends a message, disposes it, then
 /// resumes the *same* session in a fresh call and checks the agent still has
@@ -13,7 +13,7 @@ public static class SessionsSample
 {
     public static async Task<int> RunAsync()
     {
-        Console.WriteLine("== Lab 06: sessions ==\n");
+        Console.WriteLine("== Lab 05: sessions ==\n");
 
         await using var client = new CopilotClient();
         await client.StartAsync();
@@ -81,6 +81,7 @@ public static class SessionsSample
 
         Console.WriteLine($"You: {prompt}");
         await session.SendAsync(new MessageOptions { Prompt = prompt });
-        await done.Task;
+        // Never wait forever: a dropped transport means idle/error may never arrive.
+        await done.Task.WaitAsync(TimeSpan.FromMinutes(3));
     }
 }

@@ -29,7 +29,7 @@ The core route. Roughly two hours end to end.
 | 01 | [Setup](01-setup/) | Build and run the app and the SDK samples project | ~15 min |
 | 02 | [First chat](02-first-chat/) | Stream a response; discover models at runtime | ~20 min |
 | 03 | [Tools](03-tools/) | Let the model call your C# with `CopilotTool.DefineTool` | ~20 min |
-| 04 | [Events](04-events/) | Read the session event lifecycle — all 33 of them | ~20 min |
+| 04 | [Events](04-events/) | Read the real session event lifecycle | ~20 min |
 | 05 | [Sessions](05-sessions/) | Persist and resume a conversation across restarts | ~20 min |
 | 06 | [MCP](06-mcp/) | Attach an MCP server for tools you didn't write | ~20 min |
 | 07 | [Wrap-up](07-wrap-up/) | Consolidate, clean up, pick a next step | ~10 min |

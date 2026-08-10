@@ -44,7 +44,10 @@ def rewrite(target: str) -> str:
 
     # Links into docs/ become site-relative: the site root *is* docs/.
     if path.startswith("docs/"):
-        return path[len("docs/") :] + anchor
+        stripped = path[len("docs/") :]
+        # A bare "docs/" would strip to nothing and emit an empty link, so
+        # send it to the docs landing page instead.
+        return (stripped or "labs/README.md") + anchor
 
     # Everything else lives outside the site — point at GitHub.
     # Strip only a leading "./" — lstrip("./") would also eat the dot in

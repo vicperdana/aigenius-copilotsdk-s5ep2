@@ -62,7 +62,8 @@ public static class EventsSample
             Prompt = "Name two retail KPIs. One line each."
         });
 
-        await done.Task;
+        // Never wait forever: a dropped transport means idle/error may never arrive.
+        await done.Task.WaitAsync(TimeSpan.FromMinutes(3));
 
         Console.WriteLine($"\nTotal delta events: {deltaCount}");
         return 0;

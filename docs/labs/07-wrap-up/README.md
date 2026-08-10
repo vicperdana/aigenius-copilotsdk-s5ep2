@@ -34,7 +34,7 @@ practice, but they are not required for the SDK sequence.
    fetch what it needs instead of pre-loading every turn with guesses that burn
    tokens whether they are useful or not.
 
-4. **The event stream is richer than you think.** A single turn emitted 33
+4. **The event stream is richer than you think.** A single observed turn printed 33
    events in testing. Most apps handle four, and that is fine, but know what is
    available before you throw the rest away.
 

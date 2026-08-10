@@ -5,10 +5,15 @@ using GitHub.Copilot.Rpc;
 namespace SdkLabs;
 
 /// <summary>
-/// Lab 05 — approve or deny tool calls in-process.
+/// Diagnostic — NOT a lab. Reference code for
+/// <c>SessionConfig.OnPermissionRequest</c>.
 ///
-/// The SDK-native counterpart to a shell hook: instead of an external script
-/// vetting commands, your own C# decides, with the full request in hand.
+/// ⚠️ This handler was never observed firing. Even a version that rejected
+/// every request still let the shell command run, because the host Copilot CLI
+/// had pre-granted tool approval. Keep this as a starting point for testing
+/// whether the hook engages in YOUR environment — do not treat it as a working
+/// security control. See docs/labs/03-tools/ for the full caveat, and
+/// docs/labs/extra-governance-hooks/ for the shell-hook alternative.
 /// </summary>
 public static class PermissionsSample
 {
@@ -16,8 +21,9 @@ public static class PermissionsSample
     private static string DeleteCustomer(
         [Description("Customer identifier, for example C003")] string customerId)
     {
-        // Never actually reached in this sample — the handler denies it.
-        return $"Deleted {customerId}.";
+        // Deliberately inert — this sample must never mutate anything.
+        Console.WriteLine($"  [tool] DeleteCustomer({customerId}) — no-op in this sample");
+        return $"Pretended to delete {customerId}.";
     }
 
     [Description("Gets the number of transactions for a customer.")]
@@ -30,7 +36,7 @@ public static class PermissionsSample
 
     public static async Task<int> RunAsync()
     {
-        Console.WriteLine("== Lab 05: permissions ==\n");
+        Console.WriteLine("== Diagnostic: permissions (not a lab) ==\n");
 
         await using var client = new CopilotClient();
         await client.StartAsync();
@@ -95,7 +101,8 @@ public static class PermissionsSample
             Prompt = "Run the shell command `echo hello-from-lab-05` and tell me its output."
         });
 
-        await done.Task;
+        // Never wait forever: a dropped transport means idle/error may never arrive.
+        await done.Task.WaitAsync(TimeSpan.FromMinutes(3));
         return 0;
     }
 }

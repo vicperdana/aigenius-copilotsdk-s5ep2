@@ -3,7 +3,7 @@ using GitHub.Copilot;
 namespace SdkLabs;
 
 /// <summary>
-/// Lab 07 — attach an MCP server.
+/// Lab 06 — attach an MCP server.
 ///
 /// Uses the Microsoft Learn MCP server over HTTP — the same one this repo
 /// already configures for VS Code in .vscode/mcp.json — so there is nothing
@@ -13,7 +13,7 @@ public static class McpSample
 {
     public static async Task<int> RunAsync()
     {
-        Console.WriteLine("== Lab 07: mcp ==\n");
+        Console.WriteLine("== Lab 06: mcp ==\n");
 
         await using var client = new CopilotClient();
         await client.StartAsync();
@@ -60,7 +60,8 @@ public static class McpSample
                    + "what is Azure Container Apps? Answer in two sentences."
         });
 
-        await done.Task;
+        // Never wait forever: a dropped transport means idle/error may never arrive.
+        await done.Task.WaitAsync(TimeSpan.FromMinutes(3));
         return 0;
     }
 }

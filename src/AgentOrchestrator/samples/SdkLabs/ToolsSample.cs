@@ -86,7 +86,8 @@ public static class ToolsSample
             Prompt = "How much has customer C003 spent in total? Use the available tool."
         });
 
-        await done.Task;
+        // Never wait forever: a dropped transport means idle/error may never arrive.
+        await done.Task.WaitAsync(TimeSpan.FromMinutes(3));
         return 0;
     }
 }
