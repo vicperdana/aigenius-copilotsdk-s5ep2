@@ -69,14 +69,14 @@ sequenceDiagram
     participant Controller as ChatController.StreamChat
     participant Service as CopilotChatService.ChatStreamAsync
     participant Client as CopilotClient session
-    participant Channel as "Channel&lt;string&gt;"
+    participant Channel as Channel of string
 
     Browser->>UI: Submit prompt
     UI->>WebChat: StreamChatAsync(prompt, model)
     WebChat->>Controller: POST /api/chat/stream
     Controller->>Service: ChatStreamAsync(prompt, model)
     Service->>Client: CreateSessionAsync(SessionConfig)
-    Service->>Client: session.On&lt;SessionEvent&gt;(...)
+    Service->>Client: session.On (SessionEvent) subscription
     Service->>Client: SendAsync(MessageOptions)
     Client-->>Service: AssistantMessageDeltaEvent
     Service-->>Channel: TryWrite(delta content)

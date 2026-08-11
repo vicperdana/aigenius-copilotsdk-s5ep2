@@ -8,6 +8,7 @@ on:
       - docs/requirements.txt
       - mkdocs.yml
       - scripts/build_index.py
+      - scripts/check_mermaid.py
       - scripts/rewrite_doc_links.py
       - README.md
       - .github/workflows/docs.yml
@@ -17,6 +18,7 @@ on:
       - docs/requirements.txt
       - mkdocs.yml
       - scripts/build_index.py
+      - scripts/check_mermaid.py
       - scripts/rewrite_doc_links.py
       - README.md
       - .github/workflows/docs.yml
@@ -50,6 +52,11 @@ jobs:
 
       - name: Check docs links point inside docs/ or at GitHub
         run: python3 scripts/rewrite_doc_links.py --check
+
+      # Mermaid parse errors are invisible to mkdocs --strict: the page builds
+      # fine and fails in the browser. Render every diagram to catch it here.
+      - name: Check mermaid diagrams render
+        run: python3 scripts/check_mermaid.py
 
       # --strict turns broken internal links into build failures.
       - name: Build
