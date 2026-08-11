@@ -31,6 +31,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
 BLOCK = re.compile(r"```mermaid\n(.*?)```", re.S)
 MERMAID_CLI = "@mermaid-js/mermaid-cli@11"
+# mermaid-cli drives headless Chromium via Puppeteer. GitHub's runners have no
+# usable sandbox, so Chromium refuses to start without these flags.
+PUPPETEER_CONFIG = Path(__file__).resolve().parent / "puppeteer-config.json"
 
 
 def main() -> int:
@@ -54,7 +57,17 @@ def main() -> int:
             src = tmpdir / f"diagram{len(failures)}_{index}.mmd"
             src.write_text(source, encoding="utf-8")
             result = subprocess.run(
-                ["npx", "-y", MERMAID_CLI, "-i", str(src), "-o", str(src.with_suffix(".svg"))],
+                [
+                    "npx",
+                    "-y",
+                    MERMAID_CLI,
+                    "-p",
+                    str(PUPPETEER_CONFIG),
+                    "-i",
+                    str(src),
+                    "-o",
+                    str(src.with_suffix(".svg")),
+                ],
                 capture_output=True,
                 text=True,
                 timeout=300,
