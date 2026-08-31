@@ -28,10 +28,10 @@ Diagnostic (no lab):
                 control. See docs/labs-python/03-tools/.
 """
 
-COMMANDS = ("tools", "events", "sessions", "mcp", "permissions")
+COMMANDS = ("tools", "events", "sessions", "mcp", "permissions", "codealong", "codealong-final")
 
 
-async def _dispatch(command: str, model: str | None, resume: str | None) -> int:
+async def _dispatch(command: str, model: str | None, resume: str | None, phase: int = 0) -> int:
     # Imported lazily so `--help` does not pay for SDK import time.
     if command == "tools":
         from sdk_labs import tools_sample
@@ -49,6 +49,13 @@ async def _dispatch(command: str, model: str | None, resume: str | None) -> int:
         from sdk_labs import mcp_sample
 
         return await mcp_sample.run(model)
+    if command in ("codealong", "codealong-final"):
+        import importlib
+
+        mod = "code_along" if command == "codealong" else "code_along_final"
+        ca = importlib.import_module(f"sdk_labs.{mod}")
+        return await ca.run(phase, model)
+
     if command == "permissions":
         from sdk_labs import permissions_sample
 
@@ -61,6 +68,7 @@ def main() -> int:
     parser.add_argument("command", nargs="?", choices=COMMANDS)
     parser.add_argument("--model")
     parser.add_argument("--resume")
+    parser.add_argument("--phase", type=int, default=0)
 
     try:
         args, unknown = parser.parse_known_args()
@@ -74,7 +82,7 @@ def main() -> int:
         print(USAGE)
         return 1
 
-    return asyncio.run(_dispatch(args.command, args.model, args.resume))
+    return asyncio.run(_dispatch(args.command, args.model, args.resume, args.phase))
 
 
 if __name__ == "__main__":
