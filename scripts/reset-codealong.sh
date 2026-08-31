@@ -45,25 +45,43 @@ fi
 # Anything improvised OUTSIDE those blocks during a rehearsal survives it — and
 # pre-flight would still pass, because it only greps for the empty tools list.
 # So verify against git, which is the only real source of truth.
+#
+# NOTE: this script calls `exit 1` on a dirty starter. Run it, don't `source` it.
 echo
-if git rev-parse --git-dir >/dev/null 2>&1; then
+if root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+  # Resolve the starter paths from the repo root, so running this from a
+  # subdirectory can't silently skip both files and report a false "clean".
   dirty=""
+  missing=""
   for f in "$dn" "$py"; do
-    [[ -f "$f" ]] || continue
-    git diff --quiet -- "$f" 2>/dev/null || dirty="$dirty $f"
+    if [[ -f "$root/$f" ]]; then
+      # Compare against HEAD, not the index. Plain `git diff` is worktree vs
+      # index, so a rehearsal edit that was `git add`ed would pass as clean.
+      git -C "$root" diff --quiet HEAD -- "$f" 2>/dev/null || dirty="$dirty $f"
+    else
+      missing="$missing $f"
+    fi
   done
 
   if [[ -n "$dirty" ]]; then
-    echo "❌ Starter still differs from the committed version:"
+    echo "❌ Starter still differs from HEAD:"
     for f in $dirty; do echo "     $f"; done
     echo
     echo "   The block reset does not undo edits made outside the marked regions."
     echo "   Restore fully with:"
-    for f in $dirty; do echo "     git checkout -- $f"; done
+    for f in $dirty; do echo "     git -C \"$root\" checkout -- $f"; done
     exit 1
   fi
 
-  echo "✅ Starter is identical to the committed version."
+  if [[ -n "$missing" ]]; then
+    echo "⚠️  Could not verify (file not found from repo root):"
+    for f in $missing; do echo "     $f"; done
+    echo "   Expected if you only installed one track. Otherwise, check your install."
+  fi
+
+  echo "✅ Starter matches HEAD."
+  echo "   (This compares against the last commit — it cannot detect drift you"
+  echo "    have already committed. Diff against main if you're unsure.)"
 else
   echo "⚠️  Not a git repo — could not verify the starter against a committed baseline."
 fi
