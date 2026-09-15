@@ -101,7 +101,7 @@ await using var resumed = await client.ResumeSessionAsync(
     });
 ```
 
-⚠️ **The config parameter is required.** In SDK v1.0.9 this does not compile:
+⚠️ **The config parameter is required.** In SDK v1.0.13 this does not compile:
 
 ```csharp
 await client.ResumeSessionAsync(sessionId);

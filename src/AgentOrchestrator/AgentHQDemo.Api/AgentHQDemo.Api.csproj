@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <!--
       GHCP001: the permission-decision API (GitHub.Copilot.Rpc.PermissionDecision)
-      is marked experimental in SDK 1.0.9 and raises a build error unless suppressed.
+      is marked experimental in SDK 1.0.13 and raises a build error unless suppressed.
       CopilotChatService uses it to scope MCP tool approval to the read-only
       retail-analytics server.
     -->
@@ -14,13 +14,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GitHub.Copilot.SDK" Version="1.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2">
+    <PackageReference Include="GitHub.Copilot.SDK" Version="1.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Transitive-vulnerability override. SQLitePCLRaw.lib.e_sqlite3 is never
+      referenced directly in code — this pin exists only to force NuGet's
+      resolver past a vulnerable version pulled in by Microsoft.EntityFrameworkCore.Sqlite,
+      so do not remove it as "unused". It flows to McpServer and the test
+      project via ProjectReference.
+
+      GHSA-2m69-gcr7-jv3q (high): the package bundles a vulnerable SQLite build.
+      2.1.12 ships the patched native library.
+
+      Microsoft.OpenApi (GHSA-v5pm-xwqc-g5wc) needs no pin: Microsoft.AspNetCore.OpenApi
+      10.0.12 already requires >= 2.12.0, well past the 2.7.5 fix. Pinning 2.7.5
+      here would be a downgrade and fails restore with NU1605.
+    -->
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.12" />
   </ItemGroup>
 
 </Project>

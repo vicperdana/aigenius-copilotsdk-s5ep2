@@ -10,12 +10,12 @@ The main integration point is [`app/services/copilot_chat.py`](https://github.co
 from copilot import CopilotClient, SessionEvent, SessionEventType
 ```
 
-The PyPI package is `github-copilot-sdk`, pinned to **1.0.9** in [`pyproject.toml`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator-python/pyproject.toml), but the import root is `copilot`:
+The PyPI package is `github-copilot-sdk`, pinned to **1.0.13** in [`pyproject.toml`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator-python/pyproject.toml), but the import root is `copilot`:
 
 ```python
 requires-python = ">=3.11"
 dependencies = [
-    "github-copilot-sdk==1.0.9",
+    "github-copilot-sdk==1.0.13",
 ```
 
 Python 3.11 or later is required.

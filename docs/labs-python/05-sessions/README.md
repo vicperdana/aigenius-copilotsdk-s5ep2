@@ -179,7 +179,7 @@ the same server-side session.
 secrets or capabilities. Your app still needs normal user authentication and
 authorisation before resuming a stored conversation.
 
-The Python track uses PyPI `github-copilot-sdk` **1.0.9**, imported as
+The Python track uses PyPI `github-copilot-sdk` **1.0.13**, imported as
 `copilot`, and requires Python 3.11 or later. You can see those requirements in
 [`pyproject.toml`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator-python/pyproject.toml).
 

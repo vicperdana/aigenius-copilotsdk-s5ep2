@@ -3,7 +3,7 @@
 ## Project Context
 
 This is a .NET 10 retail transaction analytics demo built on the **GitHub
-Copilot SDK v1.0.9**. It has two projects: an ASP.NET Core Web API
+Copilot SDK v1.0.13**. It has two projects: an ASP.NET Core Web API
 (`AgentHQDemo.Api`, port 5050) that streams chat over SSE and serves
 transaction/segment REST endpoints, and a Blazor WebAssembly front end
 (`AgentHQDemo.Web`, port 5051). Data is SQLite via EF Core, auto-created and

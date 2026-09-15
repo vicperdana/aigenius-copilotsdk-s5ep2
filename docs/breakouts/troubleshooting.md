@@ -62,7 +62,7 @@ falls back to a small static catalogue only if the CLI cannot be reached.
 JSON-RPC deserialisation failures.
 
 **Fix**: Upgrade `GitHub.Copilot.SDK` and update the Copilot CLI together.
-This repo uses SDK v1.0.9. Also check for v1.0.0 API changes:
+This repo uses SDK v1.0.13. Also check for v1.0.0 API changes:
 
 - the namespace moved from `GitHub.Copilot.SDK` to `GitHub.Copilot`
 - `session.On<T>(...)` now needs an explicit type argument
