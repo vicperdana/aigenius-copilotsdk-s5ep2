@@ -96,7 +96,7 @@ Both tracks teach identical SDK concepts and expose an identical HTTP contract.
 | Component | .NET track | Python track |
 |-----------|------------|--------------|
 | Runtime | .NET 10 LTS | Python 3.11+ ([uv](https://docs.astral.sh/uv/)) |
-| AI SDK | GitHub Copilot SDK v1.0.9 | `github-copilot-sdk` v1.0.9 |
+| AI SDK | GitHub Copilot SDK v1.0.13 | `github-copilot-sdk` v1.0.13 |
 | Backend | ASP.NET Core Web API | FastAPI |
 | Frontend | Blazor WebAssembly | Static HTML + vanilla JS |
 | Database | SQLite + EF Core | SQLite + SQLModel |

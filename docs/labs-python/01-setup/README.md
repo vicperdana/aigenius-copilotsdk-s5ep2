@@ -20,7 +20,7 @@ Install these before you start:
 - `git`, `curl`, and `jq`
 
 ⚠️ You do **not** need the .NET SDK for this track. The Python SDK package is
-`github-copilot-sdk` version **1.0.9**, imported as `copilot`, and the project
+`github-copilot-sdk` version **1.0.13**, imported as `copilot`, and the project
 pins it in
 [`pyproject.toml`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator-python/pyproject.toml).
 

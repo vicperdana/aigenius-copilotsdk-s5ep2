@@ -150,7 +150,7 @@ and find the subscription:
             session.on(on_event)
 ```
 
-The lab project pins PyPI `github-copilot-sdk` **1.0.9**, imports it from
+The lab project pins PyPI `github-copilot-sdk` **1.0.13**, imports it from
 `copilot`, and requires Python 3.11 or later.
 
 ⚠️ **This is the biggest structural difference from the .NET SDK.** In C# every

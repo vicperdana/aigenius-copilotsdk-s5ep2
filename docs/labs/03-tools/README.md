@@ -150,7 +150,7 @@ Decisions come from `GitHub.Copilot.Rpc.PermissionDecision`, including
 shortcut, `PermissionHandler.ApproveAll`, for samples where every request is
 allowed.
 
-⚠️ In GitHub Copilot SDK v1.0.9 this permission-decision API is marked
+⚠️ In GitHub Copilot SDK v1.0.13 this permission-decision API is marked
 experimental. Using `GitHub.Copilot.Rpc.PermissionDecision` raises build error
 `GHCP001` unless it is suppressed. The samples project does that deliberately
 in

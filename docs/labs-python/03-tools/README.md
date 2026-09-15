@@ -186,7 +186,7 @@ from `copilot.rpc`, for example:
 ```python
 from copilot.rpc import PermissionDecisionApproveOnce, PermissionDecisionReject
 
-# Not re-exported at the package root in SDK 1.0.9 — import it from the module.
+# Not re-exported at the package root in SDK 1.0.13 — import it from the module.
 from copilot.session import PermissionInvocation
 ```
 

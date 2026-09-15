@@ -127,7 +127,7 @@ this repository. It describes the .NET 10 retail analytics app, coding
 conventions, Copilot SDK patterns, testing expectations, and security rules.
 
 `.github/copilot-review-instructions.md` is narrower. It provides review-time
-context, including the GitHub Copilot SDK v1.0.9 namespace
+context, including the GitHub Copilot SDK v1.0.13 namespace
 `GitHub.Copilot`, explicit `session.On<T>(...)` usage, SSE streaming rules,
 model discovery expectations, and intentional demo code smells that reviewers
 should not flag unless explicitly asked.
