@@ -8,9 +8,9 @@
 
 # AI Genius — Season 5, Episode 2
 
-[![CI](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/ci.yml/badge.svg)](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/codeql.yml/badge.svg)](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/codeql.yml)
-[![Docs site](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/docs.yml/badge.svg)](https://blog.vicperdana.com/aigenius-copilotsdk-s5ep2/)
+[![CI](https://img.shields.io/badge/CI-workflow-2088FF?logo=githubactions&logoColor=white)](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/ci.yml)
+[![CodeQL](https://img.shields.io/badge/CodeQL-workflow-2088FF?logo=githubactions&logoColor=white)](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/codeql.yml)
+[![Docs site](https://img.shields.io/badge/Docs-live-2EA44F?logo=materialformkdocs&logoColor=white)](https://blog.vicperdana.com/aigenius-copilotsdk-s5ep2/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![.NET 10](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
