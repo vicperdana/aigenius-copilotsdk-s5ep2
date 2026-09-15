@@ -1,5 +1,6 @@
 using GitHub.Copilot;
 using GitHub.Copilot.Rpc;
+using AgentHQDemo.Api.Logging;
 
 namespace AgentHQDemo.Api.Services;
 
@@ -189,7 +190,7 @@ public class CopilotChatService : IAsyncDisposable
             yield break;
         }
 
-        _logger.LogInformation("Creating session with model: {Model}", model);
+        _logger.LogInformation("Creating session with model: {Model}", LogSanitizer.Sanitize(model));
 
         var outputChannel = System.Threading.Channels.Channel.CreateUnbounded<string>();
 

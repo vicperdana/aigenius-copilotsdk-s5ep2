@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using AgentHQDemo.Api.Logging;
 using AgentHQDemo.Api.Services;
 using System.Text.Json;
 
@@ -14,6 +15,16 @@ public class ChatController : ControllerBase
 {
     private readonly CopilotChatService _chatService;
     private readonly ILogger<ChatController> _logger;
+
+    /// <summary>
+    /// What the client is told when a chat call fails.
+    /// </summary>
+    /// <remarks>
+    /// Exception text can carry file paths, connection strings, or SDK internals,
+    /// so the detail stays in the server log and the caller gets a fixed string.
+    /// Mirrors <c>_CLIENT_ERROR_MESSAGE</c> in <c>app/routers/chat.py</c>.
+    /// </remarks>
+    private const string ClientErrorMessage = "An error occurred while processing your request.";
 
     /// <summary>
     /// Available models in GitHub Copilot SDK.
@@ -94,8 +105,8 @@ public class ChatController : ControllerBase
     public async Task StreamChat([FromBody] ChatRequest request, CancellationToken cancellationToken)
     {
         var model = request.Model ?? "claude-haiku-4.5";
-        _logger.LogInformation("Starting chat stream with model {Model} for prompt: {Prompt}", 
-            model, request.Prompt?.Substring(0, Math.Min(50, request.Prompt?.Length ?? 0)));
+        _logger.LogInformation("Starting chat stream with model {Model} for prompt: {Prompt}",
+            LogSanitizer.Sanitize(model), LogSanitizer.Sanitize(request.Prompt, 50));
 
         Response.ContentType = "text/event-stream";
         Response.Headers.CacheControl = "no-cache";
@@ -121,7 +132,7 @@ public class ChatController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during chat stream");
-            var errorData = JsonSerializer.Serialize(new { error = ex.Message });
+            var errorData = JsonSerializer.Serialize(new { error = ClientErrorMessage });
             await Response.WriteAsync($"data: {errorData}\n\n", cancellationToken);
         }
     }
@@ -133,7 +144,7 @@ public class ChatController : ControllerBase
     public async Task<ActionResult<ChatResponse>> Chat([FromBody] ChatRequest request, CancellationToken cancellationToken)
     {
         var model = request.Model ?? "claude-haiku-4.5";
-        _logger.LogInformation("Processing chat request with model {Model}", model);
+        _logger.LogInformation("Processing chat request with model {Model}", LogSanitizer.Sanitize(model));
 
         try
         {
@@ -148,7 +159,7 @@ public class ChatController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during chat");
-            return StatusCode(500, new { error = ex.Message });
+            return StatusCode(500, new { error = ClientErrorMessage });
         }
     }
 
