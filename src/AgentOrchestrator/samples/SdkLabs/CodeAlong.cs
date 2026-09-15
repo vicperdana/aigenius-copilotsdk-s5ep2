@@ -9,22 +9,12 @@ namespace SdkLabs;
 /// Run one phase at a time:
 ///     dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- codealong --phase 1
 ///
-/// Phases 0 and the plumbing in each phase are DONE FOR YOU on purpose — the
-/// boring parts are pre-written so the only thing that happens on camera is the
-/// part that teaches something.
-///
-/// Two kinds of marker, and the difference matters on camera:
-///
-///     // ✍️ TYPE THIS LIVE   you genuinely type this. Phase 3 only.
-///     // 👆 WALK THROUGH     already written. Highlight it and narrate it.
-///
-/// Everything else is scaffolding. Fall back to CodeAlongFinal at any time.
+/// Only the Phase 3 block marked TYPE THIS LIVE is edited on stage.
+/// Fall back to CodeAlongFinal at any time.
 /// </summary>
 public static class CodeAlong
 {
-    // ── Phase 0 — done for you ──────────────────────────────────────────────
-    // An in-memory stand-in for the transaction store, so nothing depends on
-    // the database being seeded.
+    // Phase 0 — in-memory demo data
     private static readonly (string CustomerId, decimal Amount, string Category)[] Transactions =
     [
         ("C001", 245.50m, "Grocery"),
@@ -49,17 +39,11 @@ public static class CodeAlong
         _ => PhaseUsage()
     };
 
-    // ════════════════════════════════════════════════════════════════════════
-    // PHASE 1 — Hello World: a client and a session
-    //
-    // Talk track: "Think of it like a phone. The CLIENT is dialling the number.
-    // The SESSION is the actual conversation once someone picks up."
-    // ════════════════════════════════════════════════════════════════════════
+    // Phase 1 — Hello World: a client and a session
     private static async Task<int> Phase1HelloWorldAsync(string? requestedModelId)
     {
         Console.WriteLine("== Phase 1: hello world ==\n");
 
-        // Done for you: start the client and pick a model that this account can use.
         await using var client = new CopilotClient();
         await client.StartAsync();
 
@@ -69,9 +53,7 @@ public static class CodeAlong
             return 1;
         }
 
-        // 👆 WALK THROUGH — already written, highlight and narrate ───────────
-        // "Now the conversation. Streaming true means we get tokens as they're
-        //  produced rather than waiting for the whole answer."
+        // Streaming emits token deltas as they arrive.
         var config = new SessionConfig
         {
             Model = modelId,
@@ -79,9 +61,7 @@ public static class CodeAlong
         };
 
         await using var session = await client.CreateSessionAsync(config);
-        // ─────────────────────────────────────────────────────────────────────
 
-        // Done for you: print deltas as they arrive, stop when the session goes idle.
         var done = new TaskCompletionSource();
 
         session.On<SessionEvent>(evt =>
@@ -112,12 +92,7 @@ public static class CodeAlong
         return 0;
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    // PHASE 2 — Events: what the session actually emits
-    //
-    // Talk track: "Observe and iterate are the whole ballgame. This is the SDK
-    // telling you what it's doing, in order. Nothing hidden."
-    // ════════════════════════════════════════════════════════════════════════
+    // Phase 2 — Events: what the session emits
     private static async Task<int> Phase2EventsAsync(string? requestedModelId)
     {
         Console.WriteLine("== Phase 2: events ==\n");
@@ -141,23 +116,18 @@ public static class CodeAlong
         var order = 0;
         var deltaCount = 0;
 
-        // 👆 WALK THROUGH — already written, highlight and narrate ───────────
-        // "Instead of handling specific events, print the type name of every
-        //  event that arrives. Deltas flood, so count those instead."
+        // Count streaming deltas so the lifecycle remains readable.
         session.On<SessionEvent>(evt =>
         {
             var name = evt.GetType().Name;
 
-            // Every *Delta* event arrives in a flood — that IS the streaming.
-            // Count them so the lifecycle stays readable on a projector.
             if (name.EndsWith("DeltaEvent", StringComparison.Ordinal))
             {
                 deltaCount++;
                 return;
             }
 
-            // The SDK also emits base-typed SessionEvent envelopes we have no
-            // specific handling for. Skip them — they're noise on stage.
+            // Generic envelopes do not represent a lifecycle step.
             if (name is nameof(SessionEvent))
             {
                 return;
@@ -170,8 +140,6 @@ public static class CodeAlong
                 done.TrySetResult();
             }
         });
-        // ─────────────────────────────────────────────────────────────────────
-
         await session.SendAsync(new MessageOptions
         {
             Prompt = "In one sentence: what is customer churn?"
@@ -182,25 +150,11 @@ public static class CodeAlong
         return 0;
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    // PHASE 3 — Tools  ⭐ THE CENTREPIECE
-    //
-    // Talk track: "Up to now I've been hoping the model knows things. Now I'm
-    // going to hand it one of my own functions and let it decide when to call it."
-    //
-    // The [Description] text is not a comment. It is the contract — it is
-    // literally how the model knows what this does and when to reach for it.
-    // ════════════════════════════════════════════════════════════════════════
-
-    // 👆 WALK THROUGH — already written. THIS is the concept, so narrate it ──
-    // The [Description] attributes are not comments. They are the contract:
-    // that plain English is how the model knows what this method does and when
-    // to reach for it. Read them out loud. Do not retype the method on camera.
+    // Phase 3 — Tools: descriptions tell the model when to call the tool
     [Description("Gets the total amount a given retail customer has spent.")]
     private static string GetCustomerTotal(
         [Description("Customer identifier, for example C003")] string customerId)
     {
-        // Body is done for you — it's just a LINQ sum, not the interesting part.
         var matches = Transactions.Where(t =>
             string.Equals(t.CustomerId, customerId, StringComparison.OrdinalIgnoreCase)).ToArray();
 
@@ -211,11 +165,10 @@ public static class CodeAlong
 
         var total = matches.Sum(t => t.Amount);
 
-        // This line is your PROOF on stage that YOUR code ran.
+        // Visible proof that the custom tool executed.
         Console.WriteLine($"  [tool] GetCustomerTotal({customerId}) -> {total:C}");
         return $"{customerId} has {matches.Length} transactions totalling {total:C}.";
     }
-    // ─────────────────────────────────────────────────────────────────────────
 
     private static async Task<int> Phase3ToolsAsync(string? requestedModelId)
     {
@@ -230,24 +183,10 @@ public static class CodeAlong
             return 1;
         }
 
-        // ⚠️ RUN THIS ONCE *BEFORE* YOU TYPE ANYTHING — it's the best beat in
-        // the whole session. With Tools = [] the model still answers, because
-        // the host CLI's built-in file and shell tools let it go and rummage
-        // through your repo. Verified live: it found the SQLite database and
-        // started querying the schema.
-        //
-        // Say: "I never gave it a tool. It went and read my filesystem. That's
-        //       the default posture — capable, and permissive. Now watch what
-        //       happens when I hand it exactly one function I control."
-        //
-        // Then type the two lines below and run it again.
-
-        // ✍️ TYPE THIS LIVE — the only thing you type all session ────────────
-        // "Two lines. Wrap the method as a tool, then hand it to the session."
-        //
+        // Run once with Tools = [] to demonstrate the CLI's built-in tools.
+        // ✍️ TYPE THIS LIVE (Phase 3 only):
         //     var totalTool = CopilotTool.DefineTool(GetCustomerTotal);
-        //
-        // ...then put totalTool inside the empty Tools list below.
+        // Then replace Tools = [] with Tools = [totalTool].
 
         var config = new SessionConfig
         {
@@ -255,7 +194,6 @@ public static class CodeAlong
             Streaming = false,
             Tools = []
         };
-        // ─────────────────────────────────────────────────────────────────────
 
         await using var session = await client.CreateSessionAsync(config);
 
@@ -278,8 +216,7 @@ public static class CodeAlong
             }
         });
 
-        // Note: never name the tool in the prompt on stage. Letting the model
-        // choose it unprompted is the entire point.
+        // Let the model select the tool without naming it in the prompt.
         Console.WriteLine("Prompt: How much has customer C003 spent in total?\n");
         await session.SendAsync(new MessageOptions
         {
@@ -290,12 +227,7 @@ public static class CodeAlong
         return 0;
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    // PHASE 4 — Persistence: kill it, bring it back
-    //
-    // Talk track: "Without this, every restart is amnesia. With it, the
-    // conversation has an identity you can pick up anywhere."
-    // ════════════════════════════════════════════════════════════════════════
+    // Phase 4 — Persistence: dispose, then resume
     private static async Task<int> Phase4PersistenceAsync(string? requestedModelId)
     {
         Console.WriteLine("== Phase 4: persistence ==\n");
@@ -309,7 +241,7 @@ public static class CodeAlong
             return 1;
         }
 
-        // 👆 WALK THROUGH — already written. The id is the whole trick ───────
+        // The session ID enables resume after disposal.
         var sessionId = $"codealong-{Guid.NewGuid():N}"[..24];
         Console.WriteLine($"Session id: {sessionId}\n");
 
@@ -325,7 +257,6 @@ public static class CodeAlong
                 "Remember this: my favourite retail segment is 'At Risk'. Reply with just OK.");
         }
 
-        // Say out loud: "That session object is now GONE. Disposed."
         Console.WriteLine("\nSession disposed.\n");
 
         Console.WriteLine("--- Turn 2 (resumed) ---");
@@ -338,17 +269,11 @@ public static class CodeAlong
             await SendAndPrintAsync(resumed,
                 "Which retail segment did I say was my favourite?");
         }
-        // ─────────────────────────────────────────────────────────────────────
-
         return 0;
     }
 
-    // ════════════════════════════════════════════════════════════════════════
-    // PHASE 5 — MCP: tools you didn't write
-    //
-    // ⚠️ NETWORK DEPENDENT. This reaches learn.microsoft.com. If the venue
-    // blocks it, play the recording instead — do not debug this on stage.
-    // ════════════════════════════════════════════════════════════════════════
+    // Phase 5 — MCP: attach tools from a server
+    // Network dependent: use the recording if learn.microsoft.com is blocked.
     private static async Task<int> Phase5McpAsync(string? requestedModelId)
     {
         Console.WriteLine("== Phase 5: MCP ==\n");
@@ -362,9 +287,6 @@ public static class CodeAlong
             return 1;
         }
 
-        // 👆 WALK THROUGH — already written. The McpServers block is the payload
-        // "In phase three I wrote the tool. Here I write no tool at all — I
-        //  point at a server someone else runs, and my agent gains its toolset."
         var config = new SessionConfig
         {
             Model = modelId,
@@ -378,7 +300,6 @@ public static class CodeAlong
             },
             OnPermissionRequest = PermissionHandler.ApproveAll
         };
-        // ─────────────────────────────────────────────────────────────────────
 
         await using var session = await client.CreateSessionAsync(config);
 
@@ -389,9 +310,7 @@ public static class CodeAlong
             switch (evt)
             {
                 case ToolExecutionStartEvent start:
-                    // Print EVERY tool call, and mark the ones that came from
-                    // MCP. Without this, a run where the model picks a built-in
-                    // (web_fetch) instead looks identical to nothing happening.
+                    // Show whether each call came from MCP or a built-in tool.
                     Console.WriteLine(!string.IsNullOrWhiteSpace(start.Data.McpServerName)
                         ? $"  [mcp] {start.Data.McpServerName} :: {start.Data.McpToolName}"
                         : $"  [built-in] {start.Data.ToolName}");
@@ -412,8 +331,7 @@ public static class CodeAlong
         Console.WriteLine("Prompt: Search Microsoft Learn — what is Azure Container Apps?\n");
         await session.SendAsync(new MessageOptions
         {
-            // Steer explicitly to the MCP server. Left vague, the model may
-            // reach for a built-in web fetch instead and you lose the proof.
+            // Explicit steering prevents a built-in web fetch from hiding the MCP call.
             Prompt = "Use the microsoft.docs.mcp tools to search Microsoft Learn, then tell me "
                    + "in two sentences what Azure Container Apps is."
         });
@@ -422,7 +340,7 @@ public static class CodeAlong
         return 0;
     }
 
-    // ── Helpers — done for you ──────────────────────────────────────────────
+    // Helpers
     private static async Task SendAndPrintAsync(CopilotSession session, string prompt)
     {
         var done = new TaskCompletionSource();
