@@ -13,6 +13,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
+from app.log_sanitizer import sanitize_for_log
 from app.services.copilot_chat import DEFAULT_MODEL, CopilotChatService
 
 logger = logging.getLogger(__name__)
@@ -117,7 +118,11 @@ async def stream_chat(request: Request, body: ChatRequest) -> StreamingResponse:
     """
     model = body.model or DEFAULT_MODEL
     prompt = body.prompt or ""
-    logger.info("Starting chat stream with model %s for prompt: %s", model, prompt[:50])
+    logger.info(
+        "Starting chat stream with model %s for prompt: %s",
+        sanitize_for_log(model),
+        sanitize_for_log(prompt[:50]),
+    )
 
     service = _service(request)
 
@@ -144,7 +149,7 @@ async def stream_chat(request: Request, body: ChatRequest) -> StreamingResponse:
 async def chat(request: Request, body: ChatRequest) -> ChatResponse:
     """Sends a chat message and returns the complete response."""
     model = body.model or DEFAULT_MODEL
-    logger.info("Processing chat request with model %s", model)
+    logger.info("Processing chat request with model %s", sanitize_for_log(model))
 
     response = await _service(request).chat(body.prompt or "", model, body.system_message)
     return ChatResponse(content=response, model=model)
