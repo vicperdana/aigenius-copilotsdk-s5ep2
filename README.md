@@ -9,7 +9,7 @@
 # AI Genius — Season 5, Episode 2
 
 [![CI](https://img.shields.io/badge/CI-workflow-2088FF?logo=githubactions&logoColor=white)](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/ci.yml)
-[![CodeQL](https://img.shields.io/badge/CodeQL-workflow-2088FF?logo=githubactions&logoColor=white)](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/actions/workflows/codeql.yml)
+[![CodeQL](https://img.shields.io/badge/CodeQL-default%20setup-2088FF?logo=github&logoColor=white)](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/security/code-scanning)
 [![Docs site](https://img.shields.io/badge/Docs-live-2EA44F?logo=materialformkdocs&logoColor=white)](https://blog.vicperdana.com/aigenius-copilotsdk-s5ep2/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![.NET 10](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
@@ -260,7 +260,7 @@ graph TB
 │   ├── hooks/                  # Governance + audit hooks
 │   ├── prompts/                # Reusable prompts
 │   ├── skills/                 # Copilot skills
-│   ├── workflows/              # CI, CodeQL, setup
+│   ├── workflows/              # CI, setup
 │   ├── copilot-instructions.md # Coding standards for all agents
 │   └── copilot-review-instructions.md
 ├── .vscode/mcp.json            # MS Learn MCP server
@@ -348,9 +348,10 @@ application talking to its own database.
 **Do not use in production without addressing these.** See
 [`SECURITY.md`](SECURITY.md).
 
-> **CodeQL note:** analysis is skipped while this repository is private, since
-> code scanning requires GitHub Advanced Security. It runs automatically if the
-> repo becomes public, or set the repository variable `ENABLE_CODEQL=true`.
+> **CodeQL note:** this repository uses CodeQL [default setup](https://docs.github.com/en/code-security/code-scanning/enabling-code-scanning/configuring-default-setup-for-code-scanning)
+> rather than a checked-in workflow, so scanning is configured from the
+> repository's **Security** tab. Code scanning on a private repository requires
+> GitHub Advanced Security; on a public repository it is available by default.
 
 ## 🤝 Contributing
 

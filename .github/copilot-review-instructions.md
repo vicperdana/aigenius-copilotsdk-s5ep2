@@ -68,8 +68,8 @@ Anything **not** on this list should be reviewed normally.
   build works when `registry.npmjs.org` is unreachable. Don't remove the
   fallback to the SDK's normal download — that path is what CI and Codespaces
   use.
-- CodeQL is intentionally skipped on private repos (needs GitHub Advanced
-  Security). Don't "fix" the `if:` guard in `codeql.yml`.
+- CodeQL runs through default setup, configured from the repository's Security
+  tab. There is no `codeql.yml` to edit, so don't add one back.
 - Keep actions off the deprecated Node 20 runtime.
 
 ### Security

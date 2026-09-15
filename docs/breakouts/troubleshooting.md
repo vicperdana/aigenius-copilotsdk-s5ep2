@@ -32,20 +32,20 @@ dotnet build src/AgentOrchestrator/AgentHQDemo.slnx \
   -p:CopilotUseLocalCli=false
 ```
 
-## CodeQL Analysis shows `skipped`
+## CodeQL reports no results
 
-**Cause**: Expected on private repositories. Uploading code scanning results
-requires GitHub Advanced Security unless the repository is public.
+**Cause**: This repository uses CodeQL **default setup** rather than a
+checked-in workflow, so there is no `codeql.yml` in `.github/workflows/` and no
+CodeQL job in the Actions tab. If scanning is not enabled for the repository,
+nothing runs at all.
 
-**Fix**: Treat the skipped job as intentional, not a repo failure. The workflow
-is guarded by:
+**Fix**: Enable it from **Settings > Code security > Code scanning > CodeQL
+analysis > Set up > Default**, then check results under the repository's
+**Security** tab rather than in Actions.
 
-```yaml
-if: github.event.repository.visibility == 'public' || vars.ENABLE_CODEQL == 'true'
-```
-
-Set the repository variable `ENABLE_CODEQL=true` only when the target
-organisation has the required code scanning entitlement.
+Code scanning on a private repository requires GitHub Advanced Security. On a
+public repository it is available by default. See
+[configuring default setup](https://docs.github.com/en/code-security/code-scanning/enabling-code-scanning/configuring-default-setup-for-code-scanning).
 
 ## `Model ... is not available`
 
@@ -125,5 +125,4 @@ This is also what `.github/workflows/ci.yml` uses for restore, build, and test.
 - [Hooks and governance](./hooks-and-governance.md)
 - [`Directory.Build.props`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/Directory.Build.props)
 - [CI workflow](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/workflows/ci.yml)
-- [CodeQL workflow](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/workflows/codeql.yml)
 - [Review instructions](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/.github/copilot-review-instructions.md)
