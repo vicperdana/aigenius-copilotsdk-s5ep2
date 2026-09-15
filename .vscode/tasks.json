@@ -1,0 +1,139 @@
+{
+  "version": "2.0.0",
+  "//": "AI Genius S5E2 — one button per code-along phase, so no long commands are typed on camera. Terminal → Run Task.",
+  "tasks": [
+    {
+      "label": "▶ Phase 1 — Hello world (Python)",
+      "type": "shell",
+      "command": "uv run python -m sdk_labs codealong --phase 1",
+      "options": { "cwd": "${workspaceFolder}/src/AgentOrchestrator-python" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "▶ Phase 2 — Events (Python)",
+      "type": "shell",
+      "command": "uv run python -m sdk_labs codealong --phase 2",
+      "options": { "cwd": "${workspaceFolder}/src/AgentOrchestrator-python" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "▶ Phase 3 — Tools ⭐ (Python)",
+      "type": "shell",
+      "command": "uv run python -m sdk_labs codealong --phase 3",
+      "options": { "cwd": "${workspaceFolder}/src/AgentOrchestrator-python" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "▶ Phase 4 — Persistence (Python)",
+      "type": "shell",
+      "command": "uv run python -m sdk_labs codealong --phase 4",
+      "options": { "cwd": "${workspaceFolder}/src/AgentOrchestrator-python" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "▶ Phase 5 — MCP (Python)",
+      "type": "shell",
+      "command": "uv run python -m sdk_labs codealong --phase 5",
+      "options": { "cwd": "${workspaceFolder}/src/AgentOrchestrator-python" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "🪂 FALLBACK — run final (Python)",
+      "type": "shell",
+      "command": "uv run python -m sdk_labs codealong-final --phase ${input:phase}",
+      "options": { "cwd": "${workspaceFolder}/src/AgentOrchestrator-python" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+
+    {
+      "label": "▶ Phase 1 — Hello world (.NET)",
+      "type": "shell",
+      "command": "dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- codealong --phase 1",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "▶ Phase 2 — Events (.NET)",
+      "type": "shell",
+      "command": "dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- codealong --phase 2",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "▶ Phase 3 — Tools ⭐ (.NET)",
+      "type": "shell",
+      "command": "dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- codealong --phase 3",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "▶ Phase 4 — Persistence (.NET)",
+      "type": "shell",
+      "command": "dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- codealong --phase 4",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "▶ Phase 5 — MCP (.NET)",
+      "type": "shell",
+      "command": "dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- codealong --phase 5",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "🪂 FALLBACK — run final (.NET)",
+      "type": "shell",
+      "command": "dotnet run --project src/AgentOrchestrator/samples/SdkLabs -- codealong-final --phase ${input:phase}",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+
+    {
+      "label": "🖥 Demo app — API (.NET, 5050)",
+      "type": "shell",
+      "command": "dotnet run --project src/AgentOrchestrator/AgentHQDemo.Api --urls http://localhost:5050",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "🖥 Demo app — Blazor UI (.NET, 5051)",
+      "type": "shell",
+      "command": "dotnet run --project src/AgentOrchestrator/AgentHQDemo.Web --urls http://localhost:5051",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "🖥 Demo app — Python (5070)",
+      "type": "shell",
+      "command": "uv run uvicorn app.main:app --port 5070",
+      "options": { "cwd": "${workspaceFolder}/src/AgentOrchestrator-python" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "✅ Pre-flight — verify before going live",
+      "type": "shell",
+      "command": "bash scripts/preflight-codealong.sh",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "phase",
+      "type": "pickString",
+      "description": "Which phase?",
+      "options": ["1", "2", "3", "4", "5"],
+      "default": "3"
+    }
+  ]
+}

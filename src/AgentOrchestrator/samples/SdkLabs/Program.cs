@@ -25,6 +25,8 @@ public static class Program
             "sessions" => await SessionsSample.RunAsync(options.ModelId, options.ResumeSessionId),
             "mcp" => await McpSample.RunAsync(options.ModelId),
             "permissions" => await PermissionsSample.RunAsync(options.ModelId),
+            "codealong" => await CodeAlong.RunAsync(options.Phase, options.ModelId),
+            "codealong-final" => await CodeAlongFinal.RunAsync(options.Phase, options.ModelId),
             _ => Usage()
         };
     }
@@ -33,6 +35,7 @@ public static class Program
     {
         string? modelId = null;
         string? resumeSessionId = null;
+        var phase = 0;
 
         for (var i = 0; i < args.Length; i++)
         {
@@ -44,13 +47,17 @@ public static class Program
                 case "--resume" when i + 1 < args.Length:
                     resumeSessionId = args[++i];
                     break;
+                case "--phase" when i + 1 < args.Length && int.TryParse(args[i + 1], out var parsed):
+                    phase = parsed;
+                    i++;
+                    break;
                 default:
                     Console.WriteLine($"Unknown or incomplete option: {args[i]}");
                     return null;
             }
         }
 
-        return new SampleOptions(modelId, resumeSessionId);
+        return new SampleOptions(modelId, resumeSessionId, phase);
     }
 
     private static int Usage()
@@ -78,5 +85,5 @@ public static class Program
         return 1;
     }
 
-    private sealed record SampleOptions(string? ModelId, string? ResumeSessionId);
+    private sealed record SampleOptions(string? ModelId, string? ResumeSessionId, int Phase);
 }
