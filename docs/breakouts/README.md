@@ -33,7 +33,7 @@ The SDK equivalent of hook-style control is tool definition — see
 | Symptom | See |
 |:--------|:----|
 | `MSB3923` — can't download the Copilot CLI | [Troubleshooting](troubleshooting.md) |
-| CodeQL job shows "skipped" | [Troubleshooting](troubleshooting.md) — expected on private repos |
+| CodeQL finds no results | [Troubleshooting](troubleshooting.md) — check default setup is enabled |
 | `Model "..." is not available` | [Troubleshooting](troubleshooting.md) |
 | Port 5050/5051 already in use | [Troubleshooting](troubleshooting.md) |
 | `MSB1003` — no project or solution found | The solution is at `src/AgentOrchestrator/AgentHQDemo.slnx` |

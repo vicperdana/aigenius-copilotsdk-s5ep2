@@ -35,11 +35,31 @@ public class ChatController : ControllerBase
     }
 
     /// <summary>
+    /// Whether a model is internal-only and should be kept out of the picker.
+    /// </summary>
+    /// <remarks>
+    /// Accounts with internal entitlements see models named like
+    /// "GPT-5.6 Sol Fast (Internal only)". Showing those during a demo, stream, or
+    /// screenshot leaks the account's access scope.
+    /// <para>
+    /// The display name is the only signal available: the SDK's ModelInfo carries
+    /// just id, name, capabilities, policy (state/terms), and billing (multiplier) —
+    /// there is no visibility or internal flag, and policy.state describes whether a
+    /// model is enabled, not who may see it. Matching on the name is therefore
+    /// deliberately brittle. If the SDK ever exposes a real visibility field, this
+    /// method is the single place to change.
+    /// </para>
+    /// </remarks>
+    public static bool IsInternalOnly(string? name) =>
+        name is not null && name.Contains("internal", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
     /// Gets the list of available models.
     /// </summary>
     /// <remarks>
     /// Queries the Copilot CLI so the picker reflects the models the signed-in
-    /// account can actually use. Falls back to the static catalog if unavailable.
+    /// account can actually use. Internal-only models are filtered out. Falls back
+    /// to the static catalog if unavailable.
     /// </remarks>
     [HttpGet("models")]
     public async Task<ActionResult<IEnumerable<ModelInfo>>> GetModels(CancellationToken cancellationToken)
@@ -47,9 +67,10 @@ public class ChatController : ControllerBase
         try
         {
             var live = await _chatService.ListModelsAsync(cancellationToken);
-            if (live.Count > 0)
+            var visible = live.Where(m => !IsInternalOnly(m.Name)).ToList();
+            if (visible.Count > 0)
             {
-                return Ok(live.Select(m => AvailableModels.TryGetValue(m.Id, out var known)
+                return Ok(visible.Select(m => AvailableModels.TryGetValue(m.Id, out var known)
                     ? known
                     : new ModelInfo(m.Id, m.Name, "Available via GitHub Copilot")));
             }

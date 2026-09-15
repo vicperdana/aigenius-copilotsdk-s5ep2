@@ -29,7 +29,7 @@ Core Python commands, run from the app directory:
 cd src/AgentOrchestrator-python
 uv sync
 uv run uvicorn app.main:app --port 5070   # API + UI on one port
-uv run pytest                             # 30 tests
+uv run pytest                             # 33 tests
 uv run ruff check .
 ```
 

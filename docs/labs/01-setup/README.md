@@ -199,7 +199,7 @@ Back in the browser at <http://localhost:5051>:
 
 You should now have:
 
-- [x] A clean build, 26/26 tests passing
+- [x] A clean build, 29/29 tests passing
 - [x] API on 5050, UI on 5051
 - [x] REST endpoints returning seeded data
 - [x] A live streamed response from a real model
@@ -215,6 +215,11 @@ curl -s http://localhost:5050/api/chat/models | jq 'length'
 
 Compare that with the static fallback list in `ChatController.AvailableModels`.
 The live list is the source of truth — Lab 02 explains why that matters.
+
+The count excludes internal-only models: `ChatController.IsInternalOnly` filters
+any model whose display name contains "internal" (e.g.
+`GPT-5.6 Sol Fast (Internal only)`) so demos and screenshots do not leak your
+account's access scope.
 
 ## Related
 

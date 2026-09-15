@@ -6,7 +6,7 @@
 > Optional and independent of the numbered SDK path.
 
 **Goal:** add a new endpoint and its tests using Copilot, keeping the existing
-26 tests green and the deliberate code smells intact.
+29 tests green and the deliberate code smells intact.
 
 **Time:** ~30 minutes
 
@@ -249,7 +249,7 @@ the new endpoint — docs drift is a review finding too.
 
 - [x] New `record` DTO, service method, and endpoint added
 - [x] Tests cover the weighted average and the empty case
-- [x] All original 26 tests still pass
+- [x] All original 29 tests still pass
 - [x] The four intentional smells are untouched
 - [x] Endpoint verified against the running API
 

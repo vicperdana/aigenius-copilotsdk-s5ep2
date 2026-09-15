@@ -77,19 +77,19 @@ For the compact CI-style check:
 uv run pytest -q
 ```
 
-Expected: 30 tests pass. One verified run produced:
+Expected: 33 tests pass. One verified run produced:
 
 ```text
-..............................                                           [100%]
-30 passed in 0.61s
+.................................                                        [100%]
+33 passed in 2.16s
 ```
 
-That is 14 domain tests and 12 MCP server tests — both matching the .NET suite
-one-for-one — plus 4 Python-only contract tests that guard the browser/API
-request shape.
+That is 14 domain tests, 12 MCP server tests, and 3 model-visibility tests —
+all matching the .NET suite one-for-one — plus 4 Python-only contract tests that
+guard the browser/API request shape.
 
 Remember that number. Later labs ask you to extend behaviour without breaking
-these 30 tests.
+these 33 tests.
 
 ## Step 4 — Run the linter
 
@@ -254,7 +254,7 @@ now asserts the field `app.js` sends is the field the API reads.
 You should now have:
 
 - [x] Python dependencies restored with `uv sync`
-- [x] 30/30 tests passing
+- [x] 33/33 tests passing
 - [x] Ruff passing
 - [x] API and UI running together on port 5070
 - [x] REST endpoints returning seeded camelCase data
@@ -273,6 +273,10 @@ Then inspect the fallback catalogue in
 [`app/routers/chat.py`](https://github.com/vicperdana/aigenius-copilotsdk-s5ep2/blob/main/src/AgentOrchestrator-python/app/routers/chat.py).
 The live list is the source of truth; Lab 02 explains why the static list is only
 a fallback.
+
+The count excludes internal-only models: `_is_internal_only` filters any model
+whose display name contains "internal" (e.g. `GPT-5.6 Sol Fast (Internal only)`)
+so demos and screenshots do not leak your account's access scope.
 
 ## Related
 

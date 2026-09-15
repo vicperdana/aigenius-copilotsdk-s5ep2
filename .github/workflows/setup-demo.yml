@@ -38,12 +38,7 @@ jobs:
             -f security_and_analysis[secret_scanning_push_protection][status]=enabled \
             --silent 2>/dev/null || true
 
-          # Disable CodeQL default setup so our advanced codeql.yml workflow works
-          gh api -X PATCH "repos/${{ github.repository }}/code-scanning/default-setup" \
-            -f state=not-configured \
-            --silent 2>/dev/null || true
-
-          echo "✅ Security features enabled (CodeQL set to advanced)"
+          echo "✅ Security features enabled (CodeQL uses default setup)"
 
       - name: Create labels
         if: steps.check.outputs.issue_count == '0'

@@ -14,8 +14,9 @@ This is a **Retail Transaction Analytics** app demonstrating modern AI-assisted 
 It is implemented **twice** — once in .NET 10 LTS and once in Python 3.11+ —
 so learners can follow whichever track they prefer. The two are behavioural
 mirrors: same endpoints, same camelCase JSON contract, same seed data, same
-14 domain tests, same read-only MCP server tool surface, same four intentional
-code smells. Change behaviour in one and you must change it in the other.
+14 domain tests, same read-only MCP server tool surface, same model-visibility
+filter, same four intentional code smells. Change behaviour in one and you must
+change it in the other.
 
 ## Repository Structure
 
@@ -30,7 +31,7 @@ src/
 │   ├── AgentHQDemo.McpServer/      # Read-only MCP server over retail.db
 │   ├── AgentHQDemo.Web/            # Blazor WebAssembly UI
 │   ├── samples/SdkLabs/            # Runnable lab samples
-│   └── tests/AgentHQDemo.Tests/    # xUnit tests (26)
+│   └── tests/AgentHQDemo.Tests/    # xUnit tests (29)
 └── AgentOrchestrator-python/       # Python track
     ├── app/
     │   ├── routers/                # chat, transactions, segments
@@ -41,7 +42,7 @@ src/
     │   └── static/                 # HTML + vanilla JS chat UI
     ├── mcp_server/                 # Read-only MCP server over retail.db
     ├── sdk_labs/                   # Runnable lab samples
-    └── tests/                      # pytest tests (30)
+    └── tests/                      # pytest tests (33)
 .github/
 ├── agents/                         # Custom agent definitions
 ├── workflows/                      # CI/CD pipelines
@@ -178,7 +179,8 @@ var session = await client.CreateSessionAsync(new SessionConfig
 - Unit tests required for all agent logic
 - Integration tests for full SDK flow (requires auth)
 - Test both success and failure paths
-- Keep the two suites at parity — 14 domain tests plus 12 MCP server tests each.
+- Keep the two suites at parity — 14 domain tests, 12 MCP server tests, and
+  3 model-visibility tests each.
   Python adds 4 contract
   tests (`test_chat_contract.py`) guarding the static UI's request shape, which
   .NET does not need because its Blazor client is strongly typed.
