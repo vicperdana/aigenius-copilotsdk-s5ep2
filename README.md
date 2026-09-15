@@ -109,7 +109,7 @@ Both tracks teach identical SDK concepts and expose an identical HTTP contract.
 | Frontend | Blazor WebAssembly | Static HTML + vanilla JS |
 | Database | SQLite + EF Core | SQLite + SQLModel |
 | Model data access | MCP (`ModelContextProtocol`) | MCP (`mcp`) |
-| Tests | xUnit (26) | pytest (30) |
+| Tests | xUnit (29) | pytest (33) |
 | Lint | Roslyn analysers | Ruff |
 | Ports | 5050 API / 5051 UI | 5070 (API + UI) |
 
@@ -272,13 +272,13 @@ graph TB
 │   │   ├── AgentHQDemo.McpServer/  # Read-only MCP server over retail.db
 │   │   ├── AgentHQDemo.Web/        # Blazor WebAssembly UI
 │   │   ├── samples/SdkLabs/        # Runnable lab samples
-│   │   ├── tests/                  # xUnit tests (26)
+│   │   ├── tests/                  # xUnit tests (29)
 │   │   └── AgentHQDemo.slnx        # Solution
 │   └── AgentOrchestrator-python/   # Python implementation
 │       ├── app/                    # FastAPI — routers, services, models, UI
 │       ├── mcp_server/             # Read-only MCP server over retail.db
 │       ├── sdk_labs/               # Runnable lab samples
-│       ├── tests/                  # pytest tests (30)
+│       ├── tests/                  # pytest tests (33)
 │       └── pyproject.toml          # uv project
 ├── AGENTS.md                   # Guidelines for AI agents
 └── Directory.Build.props       # Copilot CLI resolution

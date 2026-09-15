@@ -90,6 +90,18 @@ if (Array.isArray(list) && list.length > 0) {
 
 If the API cannot be reached, the page falls back to a static catalogue of six models (`claude-haiku-4.5`, `gpt-4.1`, `gpt-5`, `claude-sonnet-4.5`, `claude-opus-4.5`, `gemini-2.5-pro`). A stale model saved in localStorage is replaced with `claude-haiku-4.5` when available, or the first live model otherwise.
 
+### Internal-only models are filtered out
+
+Accounts with internal entitlements can see models named like `GPT-5.6 Sol Fast (Internal only)`. Those names leak the account's access scope in a demo, stream, or screenshot, so `get_models` drops them before the list ever reaches the browser:
+
+```python
+visible = [(model_id, name) for model_id, name in live or [] if not _is_internal_only(name)]
+```
+
+The filter lives in the API rather than the UI, so both front-ends — this page and the Blazor `ChatService` — inherit it from one place, and the stale-selection fallback above quietly corrects a previously chosen internal model.
+
+Note the trade-off the code comments call out: the SDK's `ModelInfo` exposes only `id`, `name`, `capabilities`, `policy`, and `billing`. There is no visibility or internal flag, so matching the display name is the only option available. `ChatController.IsInternalOnly` mirrors it in the .NET track.
+
 ## Streaming render
 
 `sendMessage()` appends the user's message, adds an empty assistant placeholder, and posts to the SSE endpoint:

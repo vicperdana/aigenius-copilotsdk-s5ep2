@@ -81,22 +81,43 @@ def _service(request: Request) -> CopilotChatService:
     return request.app.state.chat_service
 
 
+def _is_internal_only(name: str | None) -> bool:
+    """Whether a model is internal-only and should be kept out of the picker.
+
+    Accounts with internal entitlements see models named like
+    ``GPT-5.6 Sol Fast (Internal only)``. Showing those during a demo, stream, or
+    screenshot leaks the account's access scope.
+
+    The display name is the only signal available: the SDK's ``ModelInfo`` carries
+    just ``id``, ``name``, ``capabilities``, ``policy`` (state/terms), and
+    ``billing`` (multiplier) — there is no visibility or internal flag, and
+    ``policy.state`` describes whether a model is enabled, not who may see it.
+    Matching on the name is therefore deliberately brittle. If the SDK ever exposes
+    a real visibility field, this function is the single place to change.
+
+    Mirrors ``ChatController.IsInternalOnly`` in the .NET track.
+    """
+    return name is not None and "internal" in name.casefold()
+
+
 @router.get("/models", response_model=list[ModelInfo])
 async def get_models(request: Request) -> list[ModelInfo]:
     """Gets the list of available models.
 
     Queries the Copilot CLI so the picker reflects the models the signed-in
-    account can actually use. Falls back to the static catalog if unavailable.
+    account can actually use. Internal-only models are filtered out. Falls back to
+    the static catalog if unavailable.
     """
     try:
         live = await _service(request).list_models()
-        if live:
+        visible = [(model_id, name) for model_id, name in live or [] if not _is_internal_only(name)]
+        if visible:
             return [
                 AVAILABLE_MODELS.get(
                     model_id,
                     ModelInfo(id=model_id, name=name, description="Available via GitHub Copilot"),
                 )
-                for model_id, name in live
+                for model_id, name in visible
             ]
     except Exception:
         # Includes the known SDK issue where ModelBilling is missing the
