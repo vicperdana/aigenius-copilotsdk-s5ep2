@@ -13,11 +13,17 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
+from app.log_sanitizer import sanitize
 from app.services.copilot_chat import DEFAULT_MODEL, CopilotChatService
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
+
+#: What the client is told when a chat call fails. Exception text can carry file
+#: paths, connection strings, or SDK internals, so the detail stays in the server
+#: log and the caller gets a fixed string. Mirrors ``ChatController.ClientErrorMessage``.
+_CLIENT_ERROR_MESSAGE = "An error occurred while processing your request."
 
 
 class ModelInfo(BaseModel):
@@ -138,7 +144,11 @@ async def stream_chat(request: Request, body: ChatRequest) -> StreamingResponse:
     """
     model = body.model or DEFAULT_MODEL
     prompt = body.prompt or ""
-    logger.info("Starting chat stream with model %s for prompt: %s", model, prompt[:50])
+    logger.info(
+        "Starting chat stream with model %s for prompt: %s",
+        sanitize(model),
+        sanitize(prompt, 50),
+    )
 
     service = _service(request)
 
@@ -150,9 +160,9 @@ async def stream_chat(request: Request, body: ChatRequest) -> StreamingResponse:
                 yield f"data: {json.dumps({'content': chunk})}\n\n"
 
             yield "data: [DONE]\n\n"
-        except Exception as ex:  # noqa: BLE001 - reported to the client as an SSE frame
+        except Exception:  # noqa: BLE001 - reported to the client as a generic SSE frame
             logger.exception("Error during chat stream")
-            yield f"data: {json.dumps({'error': str(ex)})}\n\n"
+            yield f"data: {json.dumps({'error': _CLIENT_ERROR_MESSAGE})}\n\n"
 
     return StreamingResponse(
         event_stream(),
@@ -165,7 +175,7 @@ async def stream_chat(request: Request, body: ChatRequest) -> StreamingResponse:
 async def chat(request: Request, body: ChatRequest) -> ChatResponse:
     """Sends a chat message and returns the complete response."""
     model = body.model or DEFAULT_MODEL
-    logger.info("Processing chat request with model %s", model)
+    logger.info("Processing chat request with model %s", sanitize(model))
 
     response = await _service(request).chat(body.prompt or "", model, body.system_message)
     return ChatResponse(content=response, model=model)

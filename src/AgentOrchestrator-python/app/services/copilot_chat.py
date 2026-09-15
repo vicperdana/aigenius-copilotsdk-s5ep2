@@ -31,6 +31,8 @@ from copilot.rpc import PermissionDecisionReject
 from copilot.session import PermissionDecisionApproveOnce, PermissionInvocation
 from copilot.session_events import PermissionRequestMcp
 
+from app.log_sanitizer import sanitize
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_MODEL = "claude-haiku-4.5"
@@ -152,7 +154,7 @@ class CopilotChatService:
             yield "Error: Copilot client not initialized"
             return
 
-        logger.info("Creating session with model: %s", model)
+        logger.info("Creating session with model: %s", sanitize(model))
 
         queue: asyncio.Queue[object] = asyncio.Queue()
         loop = asyncio.get_running_loop()
