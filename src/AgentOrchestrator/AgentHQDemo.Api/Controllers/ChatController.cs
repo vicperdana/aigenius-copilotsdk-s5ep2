@@ -74,7 +74,8 @@ public class ChatController : ControllerBase
     {
         var model = request.Model ?? "claude-haiku-4.5";
         _logger.LogInformation("Starting chat stream with model {Model} for prompt: {Prompt}", 
-            model, request.Prompt?.Substring(0, Math.Min(50, request.Prompt?.Length ?? 0)));
+            LogSanitizer.Sanitize(model),
+            LogSanitizer.Sanitize(request.Prompt?.Substring(0, Math.Min(50, request.Prompt?.Length ?? 0))));
 
         Response.ContentType = "text/event-stream";
         Response.Headers.CacheControl = "no-cache";
@@ -100,7 +101,7 @@ public class ChatController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during chat stream");
-            var errorData = JsonSerializer.Serialize(new { error = ex.Message });
+            var errorData = JsonSerializer.Serialize(new { error = "An error occurred during the chat stream." });
             await Response.WriteAsync($"data: {errorData}\n\n", cancellationToken);
         }
     }
@@ -112,7 +113,7 @@ public class ChatController : ControllerBase
     public async Task<ActionResult<ChatResponse>> Chat([FromBody] ChatRequest request, CancellationToken cancellationToken)
     {
         var model = request.Model ?? "claude-haiku-4.5";
-        _logger.LogInformation("Processing chat request with model {Model}", model);
+        _logger.LogInformation("Processing chat request with model {Model}", LogSanitizer.Sanitize(model));
 
         try
         {
@@ -127,7 +128,7 @@ public class ChatController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error during chat");
-            return StatusCode(500, new { error = ex.Message });
+            return StatusCode(500, new { error = "An error occurred while processing the chat request." });
         }
     }
 

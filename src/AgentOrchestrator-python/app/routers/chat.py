@@ -129,9 +129,9 @@ async def stream_chat(request: Request, body: ChatRequest) -> StreamingResponse:
                 yield f"data: {json.dumps({'content': chunk})}\n\n"
 
             yield "data: [DONE]\n\n"
-        except Exception as ex:  # noqa: BLE001 - reported to the client as an SSE frame
+        except Exception:  # noqa: BLE001 - reported to the client as an SSE frame
             logger.exception("Error during chat stream")
-            yield f"data: {json.dumps({'error': str(ex)})}\n\n"
+            yield f"data: {json.dumps({'error': 'An error occurred during the chat stream.'})}\n\n"
 
     return StreamingResponse(
         event_stream(),
