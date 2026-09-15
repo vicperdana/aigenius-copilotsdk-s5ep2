@@ -5,7 +5,7 @@ description = "Python version of the AI Genius S5E2 Copilot SDK learning series"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "github-copilot-sdk==1.0.9",
+    "github-copilot-sdk==1.0.13",
     "fastapi>=0.115",
     "uvicorn[standard]>=0.32",
     "sqlmodel>=0.0.22",
