@@ -4,6 +4,24 @@
 # Tool caches
 .pytest_cache/
 .ruff_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.tox/
+.nox/
+.hypothesis/
+
+# Test and coverage output
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Local package/build output
+build/
+dist/
+*.egg-info/
+.eggs/
 
 # SQLite database created on first run
 *.db
