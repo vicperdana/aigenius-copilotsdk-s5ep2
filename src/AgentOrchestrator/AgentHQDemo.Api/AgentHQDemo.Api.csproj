@@ -38,7 +38,7 @@
       10.0.12 already requires >= 2.12.0, well past the 2.7.5 fix. Pinning 2.7.5
       here would be a downgrade and fails restore with NU1605.
     -->
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.12" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
   </ItemGroup>
 
 </Project>
