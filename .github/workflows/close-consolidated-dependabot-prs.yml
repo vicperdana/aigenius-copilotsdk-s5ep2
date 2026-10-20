@@ -1,0 +1,51 @@
+name: Close consolidated Dependabot PRs
+
+on:
+  pull_request_target:
+    types: [closed]
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  close-superseded:
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.head.ref == 'copilot/dependabot-consolidated-pr'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Close only the superseded Dependabot PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          CONSOLIDATED_PR_URL: ${{ github.event.pull_request.html_url }}
+        shell: bash
+        run: |
+          failures=0
+          for number in 52 54 56 59 60 63 64 66 67 68 69 70 71 72 73 74 75; do
+            if ! metadata=$(gh api "repos/$GH_REPO/pulls/$number" \
+              --jq '[.state, .user.login, .base.ref] | @tsv'); then
+              failures=1
+              continue
+            fi
+
+            IFS=$'\t' read -r state author base <<< "$metadata"
+            if [[ "$state" != "open" ]]; then
+              echo "Skipping already closed PR #$number."
+              continue
+            fi
+            if [[ "$author" != "dependabot[bot]" || "$base" != "main" ]]; then
+              echo "::error::Refusing to close unexpected PR #$number."
+              failures=1
+              continue
+            fi
+
+            if ! gh pr close "$number" --repo "$GH_REPO" \
+              --comment "Superseded by $CONSOLIDATED_PR_URL, which has now been merged."; then
+              failures=1
+            fi
+          done
+          exit "$failures"
